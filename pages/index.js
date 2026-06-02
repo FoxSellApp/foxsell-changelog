@@ -95,7 +95,10 @@ export default function Home() {
           property="og:description"
           content="Browse the latest FoxSell launches, improvements, and fixes in a premium merchant-friendly changelog."
         />
-        <link rel="icon" href="/favicon.svg" />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
       </Head>
 
       <main className="page-shell">
@@ -122,12 +125,7 @@ export default function Home() {
           <div className="hero-background-orb hero-background-orb-right" />
 
           <div className="hero-topbar">
-            <div className="brand-lockup">
-              <div className="brand-mark">
-                <Image src="/assets/foxsell-logo.svg" alt="FoxSell" width={150} height={40} priority />
-              </div>
-              <span className="brand-caption">Product changelog</span>
-            </div>
+            <span className="brand-caption">Product changelog</span>
             <a className="ghost-link" href="#latest-updates">
               Latest updates
             </a>
@@ -135,7 +133,7 @@ export default function Home() {
 
           <div className="hero-grid hero-grid-simple">
             <div className="hero-copy-column hero-copy-column-simple">
-              <span className="eyebrow">What&apos;s new at FoxSell</span>
+              <span className="eyebrow">What&apos;s new</span>
               <h1>Product updates that help merchants launch better bundles, faster</h1>
               <p className="hero-copy">
                 Follow the latest FoxSell launches, refinements, and fixes in one clean stream built for merchants who want clarity, not clutter.

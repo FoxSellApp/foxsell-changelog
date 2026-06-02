@@ -162,25 +162,7 @@ img {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  margin-bottom: 34px;
-}
-
-.brand-lockup {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.brand-mark {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 54px;
-  padding: 0 16px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.76);
-  border: 1px solid rgba(37, 23, 16, 0.08);
-  box-shadow: var(--shadow-sm);
+  margin-bottom: 44px;
 }
 
 .brand-caption,
@@ -253,7 +235,7 @@ img {
 }
 
 .hero-copy-column h1 {
-  margin: 22px 0 16px;
+  margin: 28px 0 24px;
   max-width: 760px;
   font-size: clamp(48px, 8vw, 92px);
   line-height: 0.94;
@@ -269,18 +251,24 @@ img {
 }
 
 .hero-copy-column-simple h1 {
-  margin: 0;
-  max-width: 720px;
+  width: 100%;
+  margin: 0 0 24px;
+  max-width: none;
   font-size: clamp(42px, 7vw, 72px);
   line-height: 0.98;
   letter-spacing: -0.05em;
+}
+
+.hero-copy-column-simple .hero-copy {
+  width: 100%;
+  max-width: none;
 }
 
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 14px;
-  margin-top: 30px;
+  margin-top: 38px;
 }
 
 .primary-action,
