@@ -3,7 +3,7 @@ import Image from "next/image"
 
 const featuredStory = {
   date: "June 2, 2026",
-  tag: "Featured",
+  tag: "Launch",
   title: "A cleaner, faster dashboard home for getting started",
   summary:
     "We refreshed the first-touch FoxSell dashboard experience so merchants can get oriented faster, understand what to do next, and launch value with less wandering.",
@@ -77,6 +77,10 @@ const changelogEntries = [
   }
 ]
 
+const websiteUrl = "https://www.foxsell.com/?utm_source=foxsell_changelog&utm_medium=navbar&utm_campaign=public_changelog"
+const appStoreUrl = "https://apps.shopify.com/foxsell-bundles-plus?utm_source=foxsell_changelog&utm_medium=navbar&utm_campaign=public_changelog"
+const helpDocsUrl = "https://help.foxsell.app/en/"
+
 export default function Home() {
   return (
     <>
@@ -95,6 +99,24 @@ export default function Home() {
       </Head>
 
       <main className="page-shell">
+        <nav className="site-nav" aria-label="Primary navigation">
+          <button className="nav-brand" type="button" onClick={() => window.location.reload()} aria-label="Reload FoxSell changelog">
+            <Image src="/assets/foxsell-logo.svg" alt="FoxSell" width={150} height={40} priority />
+          </button>
+
+          <div className="nav-links">
+            <a className="nav-link" href={websiteUrl} target="_blank" rel="noreferrer">
+              Website
+            </a>
+            <a className="nav-link" href={appStoreUrl} target="_blank" rel="noreferrer">
+              App Store
+            </a>
+            <a className="nav-link" href={helpDocsUrl} target="_blank" rel="noreferrer">
+              Help docs
+            </a>
+          </div>
+        </nav>
+
         <section className="hero-section">
           <div className="hero-background-orb hero-background-orb-left" />
           <div className="hero-background-orb hero-background-orb-right" />
@@ -140,8 +162,10 @@ export default function Home() {
           </div>
 
           <article className="featured-card featured-card-simple">
-            <div className="entry-meta-row">
-              <span className="entry-date">{featuredStory.date}</span>
+            <div className="entry-header">
+              <div>
+                <div className="entry-date">{featuredStory.date}</div>
+              </div>
               <span className="entry-tag">{featuredStory.tag}</span>
             </div>
             <p>{featuredStory.summary}</p>
