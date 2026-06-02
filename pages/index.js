@@ -77,6 +77,8 @@ const changelogEntries = [
   }
 ]
 
+const changelogUrl = "https://changelog.foxsell.com"
+const socialPreviewImageUrl = `${changelogUrl}/social-preview.png`
 const websiteUrl = "https://www.foxsell.com/?utm_source=foxsell_changelog&utm_medium=navbar&utm_campaign=public_changelog"
 const appStoreUrl = "https://apps.shopify.com/foxsell-bundles-plus?utm_source=foxsell_changelog&utm_medium=navbar&utm_campaign=public_changelog"
 const helpDocsUrl = "https://help.foxsell.app/en/"
@@ -95,6 +97,23 @@ export default function Home() {
           property="og:description"
           content="Browse the latest FoxSell launches, improvements, and fixes in a premium merchant-friendly changelog."
         />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={changelogUrl} />
+        <meta property="og:site_name" content="FoxSell Changelog" />
+        <meta property="og:image" content={socialPreviewImageUrl} />
+        <meta property="og:image:secure_url" content={socialPreviewImageUrl} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="FoxSell changelog social preview with branded product update artwork" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="FoxSell Changelog" />
+        <meta
+          name="twitter:description"
+          content="Browse the latest FoxSell launches, improvements, and fixes in a premium merchant-friendly changelog."
+        />
+        <meta name="twitter:image" content={socialPreviewImageUrl} />
+        <meta name="twitter:image:alt" content="FoxSell changelog social preview with branded product update artwork" />
+        <link rel="canonical" href={changelogUrl} />
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
