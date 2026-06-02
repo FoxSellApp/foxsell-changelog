@@ -84,54 +84,33 @@ const changelogEntries = [
 const changelogUrl = "https://changelog.foxsell.com"
 const socialPreviewImageUrl = `${changelogUrl}/social-preview.png`
 const websiteUrl = "https://www.foxsell.com/?utm_source=foxsell_changelog&utm_medium=navbar&utm_campaign=public_changelog"
-const appStoreUrl = "https://apps.shopify.com/foxsell-bundles-plus?utm_source=foxsell_changelog&utm_medium=navbar&utm_campaign=public_changelog"
+const appStoreUrl = "https://apps.shopify.com/foxsell-bundles-plus?utm_source=foxsell_changelog&utm_medium=cta&utm_campaign=public_changelog"
 const helpDocsUrl = "https://help.foxsell.app/en/"
 
 const navigationLinks = [
   {
     href: websiteUrl,
     label: "Website",
-    description: "Explore FoxSell and product highlights"
-  },
-  {
-    href: appStoreUrl,
-    label: "App Store",
-    description: "See reviews, pricing, and install details"
+    description: "Explore FoxSell and product highlights",
+    external: true
   },
   {
     href: helpDocsUrl,
     label: "Help docs",
-    description: "Browse setup guides and troubleshooting"
+    description: "Browse setup guides and troubleshooting",
+    external: true
   }
 ]
 
-const heroStats = [
-  {
-    label: "Fresh releases",
-    value: "05",
-    detail: "Recent launches, fixes, and storefront improvements"
-  },
-  {
-    label: "Merchant focus",
-    value: "100%",
-    detail: "Public-facing updates written for clarity and confidence"
-  },
-  {
-    label: "Shipping pace",
-    value: "Weekly",
-    detail: "A steady stream of product polish across the bundle journey"
-  }
-]
-
-function LinkButton({ href, children, variant = "secondary", className }) {
+function LinkButton({ href, children, variant = "secondary", className, external = false }) {
   const Component = href ? "a" : "button"
 
   return (
     <Component
       className={clsx("button", `button-${variant}`, className)}
       href={href}
-      target={href ? "_blank" : undefined}
-      rel={href ? "noreferrer" : undefined}
+      target={external ? "_blank" : undefined}
+      rel={external ? "noreferrer" : undefined}
       type={href ? undefined : "button"}
     >
       {children}
@@ -143,6 +122,35 @@ function Surface({ asChild = false, className, children }) {
   const Component = asChild ? Slot : "div"
 
   return <Component className={clsx("surface-card", className)}>{children}</Component>
+}
+
+function TimelineEntry({ entry, index }) {
+  return (
+    <li className="timeline-item">
+      <div className="timeline-track" aria-hidden="true">
+        <span className="timeline-node" />
+        {index !== changelogEntries.length - 1 ? <span className="timeline-stem" /> : null}
+      </div>
+
+      <Surface asChild>
+        <article className="entry-card">
+          <div className="entry-header">
+            <div>
+              <div className="entry-date">{entry.date}</div>
+              <h3>{entry.title}</h3>
+            </div>
+            <span className="entry-tag">{entry.tag}</span>
+          </div>
+          <p>{entry.summary}</p>
+          <ul>
+            {entry.bullets.map((bullet) => (
+              <li key={bullet}>{bullet}</li>
+            ))}
+          </ul>
+        </article>
+      </Surface>
+    </li>
+  )
 }
 
 function MobileNavigation() {
@@ -196,7 +204,7 @@ function MobileNavigation() {
                 </Dialog.Close>
                 <Dialog.Close asChild>
                   <a className="button button-secondary" href="#latest-updates">
-                    Browse archive
+                    Latest updates
                   </a>
                 </Dialog.Close>
               </div>
@@ -264,13 +272,13 @@ export default function Home() {
               <LinkButton href="#latest-updates" variant="ghost" className="nav-inline-action">
                 Latest updates
               </LinkButton>
-              <LinkButton href={appStoreUrl} variant="primary" className="nav-inline-action">
+              <LinkButton href={appStoreUrl} variant="primary" className="nav-inline-action" external>
                 Install app
               </LinkButton>
             </div>
 
             <div className="nav-mobile-actions">
-              <LinkButton href={appStoreUrl} variant="primary" className="nav-mobile-cta">
+              <LinkButton href={appStoreUrl} variant="primary" className="nav-mobile-cta" external>
                 Install
               </LinkButton>
               <MobileNavigation />
@@ -290,7 +298,7 @@ export default function Home() {
             </Surface>
           </div>
 
-          <div className="hero-grid">
+          <div className="hero-grid hero-grid-single">
             <div className="hero-copy-column">
               <span className="eyebrow">What&apos;s new</span>
               <h1>Product updates that help merchants launch better bundles, faster</h1>
@@ -304,26 +312,10 @@ export default function Home() {
                   <ArrowRight size={18} strokeWidth={2.2} />
                 </LinkButton>
                 <LinkButton href="#latest-updates" variant="secondary">
-                  Browse the archive
+                  Latest updates
                 </LinkButton>
               </div>
             </div>
-
-            <Surface className="hero-panel">
-              <div className="hero-panel-header">
-                <span className="hero-panel-kicker">At a glance</span>
-                <span className="hero-panel-status">Live</span>
-              </div>
-              <div className="hero-stats-grid">
-                {heroStats.map((heroStat) => (
-                  <div className="hero-stat" key={heroStat.label}>
-                    <span className="hero-stat-label">{heroStat.label}</span>
-                    <strong className="hero-stat-value">{heroStat.value}</strong>
-                    <p>{heroStat.detail}</p>
-                  </div>
-                ))}
-              </div>
-            </Surface>
           </div>
         </section>
 
@@ -361,35 +353,18 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="timeline-layout">
-            <div className="timeline-rail">
-              <div className="timeline-rail-line" />
-              <div className="timeline-rail-label">Recent updates</div>
+          <Surface className="timeline-shell">
+            <div className="timeline-shell-header">
+              <span className="timeline-shell-kicker">Latest updates</span>
+              <p>Browse recent launches, storefront polish, and reliability improvements in one continuous release stream.</p>
             </div>
 
-            <div className="timeline-list">
-              {changelogEntries.map((entry) => (
-                <Surface asChild key={entry.title}>
-                  <article className="entry-card">
-                    <div className="entry-card-marker" />
-                    <div className="entry-header">
-                      <div>
-                        <div className="entry-date">{entry.date}</div>
-                        <h3>{entry.title}</h3>
-                      </div>
-                      <span className="entry-tag">{entry.tag}</span>
-                    </div>
-                    <p>{entry.summary}</p>
-                    <ul>
-                      {entry.bullets.map((bullet) => (
-                        <li key={bullet}>{bullet}</li>
-                      ))}
-                    </ul>
-                  </article>
-                </Surface>
+            <ol className="timeline-list">
+              {changelogEntries.map((entry, index) => (
+                <TimelineEntry key={`${entry.date}-${entry.title}`} entry={entry} index={index} />
               ))}
-            </div>
-          </div>
+            </ol>
+          </Surface>
         </section>
       </main>
     </>
