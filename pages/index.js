@@ -1,45 +1,10 @@
 import Head from "next/head"
 import Image from "next/image"
 
-const heroMetrics = [
-  { value: "Fresh", label: "Merchant-first product notes" },
-  { value: "6", label: "Meaningful updates in the current release window" },
-  { value: "Public", label: "Written for store teams, not internal teams" }
-]
-
-const updatePillars = [
-  {
-    eyebrow: "Launch faster",
-    title: "New setup experiences that get offers live with less effort",
-    description:
-      "From guided templates to clearer next steps, recent work has focused on helping merchants move from idea to launch with more confidence."
-  },
-  {
-    eyebrow: "Sell better",
-    title: "Sharper storefront experiences for shoppers exploring bundles",
-    description:
-      "Selection flows, pricing summaries, and option presentation have been refined so bundle shopping feels cleaner and more intuitive."
-  },
-  {
-    eyebrow: "Stay in control",
-    title: "Steadier editing and fewer frustrating edge cases behind the scenes",
-    description:
-      "We have been tightening reliability in the flows merchants touch most, especially when managing more advanced bundle setups."
-  }
-]
-
 const featuredStory = {
-  label: "Featured release",
   date: "June 2, 2026",
   tag: "New",
-  title: "A cleaner, faster dashboard home for getting started",
-  summary:
-    "FoxSell now opens with a much clearer starting point, making it easier to understand your bundle options, choose the right path, and get value sooner after install.",
-  bullets: [
-    "A more guided homepage with clearer setup direction for new merchants",
-    "Better signposting that helps stores move from install to launch with less guesswork",
-    "Support and learning touchpoints surfaced earlier in the journey"
-  ]
+  title: "A cleaner, faster dashboard home for getting started"
 }
 
 const changelogEntries = [
@@ -146,14 +111,9 @@ export default function Home() {
             </a>
           </div>
 
-          <div className="hero-grid">
-            <div className="hero-copy-column">
-              <span className="eyebrow">What&apos;s new at FoxSell</span>
-              <h1>The public changelog for merchants who care about momentum.</h1>
-              <p className="hero-copy">
-                Follow the launches, improvements, and fixes that make FoxSell easier to set up,
-                smoother to manage, and better for shoppers across every bundle experience.
-              </p>
+          <div className="hero-grid hero-grid-simple">
+            <div className="hero-copy-column hero-copy-column-simple">
+              <h1>FoxSell product changelog</h1>
 
               <div className="hero-actions">
                 <a className="primary-action" href="#featured-release">
@@ -163,70 +123,22 @@ export default function Home() {
                   Browse the archive
                 </a>
               </div>
-
-              <div className="metrics-row">
-                {heroMetrics.map((metric) => (
-                  <div className="metric-card" key={metric.label}>
-                    <div className="metric-value">{metric.value}</div>
-                    <div className="metric-label">{metric.label}</div>
-                  </div>
-                ))}
-              </div>
             </div>
-
-            <aside className="hero-aside-card">
-              <div className="aside-label">Release focus</div>
-              <h2>Built to be worth checking, not just technically complete.</h2>
-              <ul className="feature-list">
-                {releaseNotes.map((note) => (
-                  <li key={note}>{note}</li>
-                ))}
-              </ul>
-              <p className="aside-note">
-                We keep this changelog focused on meaningful merchant value and skip the internal implementation noise.
-              </p>
-            </aside>
           </div>
-        </section>
-
-        <section className="pillar-section">
-          {updatePillars.map((pillar) => (
-            <article className="pillar-card" key={pillar.title}>
-              <span className="section-kicker">{pillar.eyebrow}</span>
-              <h2>{pillar.title}</h2>
-              <p>{pillar.description}</p>
-            </article>
-          ))}
         </section>
 
         <section className="featured-section" id="featured-release">
           <div className="section-heading-row">
             <div>
               <span className="section-kicker">Featured release</span>
-              <h2>The latest story, presented with more context</h2>
+              <h2>{featuredStory.title}</h2>
             </div>
-            <p>
-              Instead of a plain list, the most important release gets room to explain what changed and why it matters to merchants.
-            </p>
           </div>
 
-          <article className="featured-card">
-            <div className="featured-card-main">
-              <div className="entry-meta-row">
-                <span className="entry-date">{featuredStory.date}</span>
-                <span className="entry-tag">{featuredStory.tag}</span>
-              </div>
-              <h3>{featuredStory.title}</h3>
-              <p>{featuredStory.summary}</p>
-            </div>
-
-            <div className="featured-card-side">
-              <div className="featured-side-label">Why it matters</div>
-              <ul>
-                {featuredStory.bullets.map((bullet) => (
-                  <li key={bullet}>{bullet}</li>
-                ))}
-              </ul>
+          <article className="featured-card featured-card-simple">
+            <div className="entry-meta-row">
+              <span className="entry-date">{featuredStory.date}</span>
+              <span className="entry-tag">{featuredStory.tag}</span>
             </div>
           </article>
         </section>
@@ -237,9 +149,6 @@ export default function Home() {
               <span className="section-kicker">Release archive</span>
               <h2>A changelog designed for browsing, not skimming past</h2>
             </div>
-            <p>
-              Explore recent FoxSell updates in a cleaner reading experience with clearer hierarchy, better spacing, and faster scanning.
-            </p>
           </div>
 
           <div className="timeline-layout">
