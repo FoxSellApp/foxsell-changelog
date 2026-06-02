@@ -3,8 +3,15 @@ import Image from "next/image"
 
 const featuredStory = {
   date: "June 2, 2026",
-  tag: "New",
-  title: "A cleaner, faster dashboard home for getting started"
+  tag: "Featured",
+  title: "A cleaner, faster dashboard home for getting started",
+  summary:
+    "We refreshed the first-touch FoxSell dashboard experience so merchants can get oriented faster, understand what to do next, and launch value with less wandering.",
+  bullets: [
+    "A more focused home experience that brings setup momentum closer to the surface",
+    "Clearer guidance for the first actions that matter after install",
+    "A cleaner visual hierarchy that makes the dashboard feel faster and more polished"
+  ]
 }
 
 const changelogEntries = [
@@ -70,13 +77,6 @@ const changelogEntries = [
   }
 ]
 
-const releaseNotes = [
-  "New setup guidance that reduces time-to-launch",
-  "More polished preview and discovery moments for templates",
-  "Stronger storefront clarity around options, summaries, and pricing",
-  "Reliability fixes that reduce friction in advanced bundle editing"
-]
-
 export default function Home() {
   return (
     <>
@@ -113,7 +113,11 @@ export default function Home() {
 
           <div className="hero-grid hero-grid-simple">
             <div className="hero-copy-column hero-copy-column-simple">
-              <h1>FoxSell product changelog</h1>
+              <span className="eyebrow">What&apos;s new at FoxSell</span>
+              <h1>Product updates that help merchants launch better bundles, faster</h1>
+              <p className="hero-copy">
+                Follow the latest FoxSell launches, refinements, and fixes in one clean stream built for merchants who want clarity, not clutter.
+              </p>
 
               <div className="hero-actions">
                 <a className="primary-action" href="#featured-release">
@@ -128,7 +132,7 @@ export default function Home() {
         </section>
 
         <section className="featured-section" id="featured-release">
-          <div className="section-heading-row">
+          <div className="section-heading-row section-heading-row-full">
             <div>
               <span className="section-kicker">Featured release</span>
               <h2>{featuredStory.title}</h2>
@@ -140,11 +144,17 @@ export default function Home() {
               <span className="entry-date">{featuredStory.date}</span>
               <span className="entry-tag">{featuredStory.tag}</span>
             </div>
+            <p>{featuredStory.summary}</p>
+            <ul>
+              {featuredStory.bullets.map((bullet) => (
+                <li key={bullet}>{bullet}</li>
+              ))}
+            </ul>
           </article>
         </section>
 
         <section className="timeline-section" id="latest-updates">
-          <div className="section-heading-row section-heading-row-archive">
+          <div className="section-heading-row section-heading-row-full section-heading-row-archive">
             <div>
               <span className="section-kicker">Release archive</span>
               <h2>A changelog designed for browsing, not skimming past</h2>

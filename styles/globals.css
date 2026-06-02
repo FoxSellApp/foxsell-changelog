@@ -193,6 +193,7 @@ img {
 
 .hero-copy-column-simple {
   align-items: flex-start;
+  width: 100%;
   padding: 12px 6px 8px;
 }
 
@@ -324,6 +325,15 @@ img {
   margin-bottom: 22px;
 }
 
+.section-heading-row-full {
+  grid-template-columns: minmax(0, 1fr);
+  margin-bottom: 18px;
+}
+
+.section-heading-row-full h2 {
+  max-width: 860px;
+}
+
 .featured-card {
   display: grid;
   gap: 20px;
@@ -332,6 +342,15 @@ img {
   background: linear-gradient(140deg, rgba(255, 255, 255, 0.9), rgba(255, 243, 233, 0.88));
   border: 1px solid rgba(255, 255, 255, 0.86);
   box-shadow: var(--shadow-lg);
+}
+
+.featured-card p {
+  max-width: 840px;
+}
+
+.featured-card ul {
+  display: grid;
+  gap: 10px;
 }
 
 .featured-card-simple {
