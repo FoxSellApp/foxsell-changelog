@@ -1,5 +1,9 @@
 import Head from "next/head"
 import Image from "next/image"
+import * as Dialog from "@radix-ui/react-dialog"
+import { Slot } from "@radix-ui/react-slot"
+import clsx from "clsx"
+import { ArrowRight, ExternalLink, Menu, Sparkles, X } from "lucide-react"
 
 const featuredStory = {
   date: "June 2, 2026",
@@ -83,6 +87,127 @@ const websiteUrl = "https://www.foxsell.com/?utm_source=foxsell_changelog&utm_me
 const appStoreUrl = "https://apps.shopify.com/foxsell-bundles-plus?utm_source=foxsell_changelog&utm_medium=navbar&utm_campaign=public_changelog"
 const helpDocsUrl = "https://help.foxsell.app/en/"
 
+const navigationLinks = [
+  {
+    href: websiteUrl,
+    label: "Website",
+    description: "Explore FoxSell and product highlights"
+  },
+  {
+    href: appStoreUrl,
+    label: "App Store",
+    description: "See reviews, pricing, and install details"
+  },
+  {
+    href: helpDocsUrl,
+    label: "Help docs",
+    description: "Browse setup guides and troubleshooting"
+  }
+]
+
+const heroStats = [
+  {
+    label: "Fresh releases",
+    value: "05",
+    detail: "Recent launches, fixes, and storefront improvements"
+  },
+  {
+    label: "Merchant focus",
+    value: "100%",
+    detail: "Public-facing updates written for clarity and confidence"
+  },
+  {
+    label: "Shipping pace",
+    value: "Weekly",
+    detail: "A steady stream of product polish across the bundle journey"
+  }
+]
+
+function LinkButton({ href, children, variant = "secondary", className }) {
+  const Component = href ? "a" : "button"
+
+  return (
+    <Component
+      className={clsx("button", `button-${variant}`, className)}
+      href={href}
+      target={href ? "_blank" : undefined}
+      rel={href ? "noreferrer" : undefined}
+      type={href ? undefined : "button"}
+    >
+      {children}
+    </Component>
+  )
+}
+
+function Surface({ asChild = false, className, children }) {
+  const Component = asChild ? Slot : "div"
+
+  return <Component className={clsx("surface-card", className)}>{children}</Component>
+}
+
+function MobileNavigation() {
+  return (
+    <Dialog.Root>
+      <Dialog.Trigger asChild>
+        <button className="nav-menu-trigger" type="button" aria-label="Open navigation menu">
+          <Menu size={18} strokeWidth={2.2} />
+          <span>Menu</span>
+        </button>
+      </Dialog.Trigger>
+
+      <Dialog.Portal>
+        <Dialog.Overlay className="nav-drawer-overlay" />
+        <Dialog.Content className="nav-drawer-content">
+          <div className="nav-drawer-shell">
+            <div className="nav-drawer-header">
+              <div className="nav-drawer-brand-lockup">
+                <span className="nav-drawer-caption">FoxSell changelog</span>
+                <Image src="/assets/foxsell-logo.svg" alt="FoxSell" width={126} height={34} />
+              </div>
+              <Dialog.Close asChild>
+                <button className="nav-drawer-close" type="button" aria-label="Close navigation menu">
+                  <X size={18} strokeWidth={2.2} />
+                </button>
+              </Dialog.Close>
+            </div>
+
+            <div className="nav-drawer-body">
+              <p className="nav-drawer-copy">Product updates, release notes, and launch highlights in one compact stream.</p>
+
+              <div className="nav-drawer-links" role="list">
+                {navigationLinks.map((navigationLink) => (
+                  <Dialog.Close asChild key={navigationLink.label}>
+                    <a className="nav-drawer-link-card" href={navigationLink.href} target="_blank" rel="noreferrer">
+                      <div>
+                        <span className="nav-drawer-link-label">{navigationLink.label}</span>
+                        <span className="nav-drawer-link-description">{navigationLink.description}</span>
+                      </div>
+                      <ExternalLink size={16} strokeWidth={2.1} />
+                    </a>
+                  </Dialog.Close>
+                ))}
+              </div>
+
+              <div className="nav-drawer-actions">
+                <Dialog.Close asChild>
+                  <a className="button button-primary" href="#featured-release">
+                    Read featured release
+                  </a>
+                </Dialog.Close>
+                <Dialog.Close asChild>
+                  <a className="button button-secondary" href="#latest-updates">
+                    Browse archive
+                  </a>
+                </Dialog.Close>
+              </div>
+            </div>
+          </div>
+        </Dialog.Content>
+      </Dialog.Portal>
+    </Dialog.Root>
+  )
+}
+
 export default function Home() {
   return (
     <>
@@ -121,52 +246,84 @@ export default function Home() {
       </Head>
 
       <main className="page-shell">
-        <nav className="site-nav" aria-label="Primary navigation">
-          <button className="nav-brand" type="button" onClick={() => window.location.reload()} aria-label="Reload FoxSell changelog">
-            <Image src="/assets/foxsell-logo.svg" alt="FoxSell" width={150} height={40} priority />
-          </button>
+        <header className="site-header">
+          <nav className="site-nav" aria-label="Primary navigation">
+            <a className="nav-brand" href="#top" aria-label="Go to top of FoxSell changelog">
+              <Image src="/assets/foxsell-logo.svg" alt="FoxSell" width={144} height={38} priority />
+            </a>
 
-          <div className="nav-links">
-            <a className="nav-link" href={websiteUrl} target="_blank" rel="noreferrer">
-              Website
-            </a>
-            <a className="nav-link" href={appStoreUrl} target="_blank" rel="noreferrer">
-              App Store
-            </a>
-            <a className="nav-link" href={helpDocsUrl} target="_blank" rel="noreferrer">
-              Help docs
-            </a>
-          </div>
-        </nav>
+            <div className="nav-desktop-links">
+              {navigationLinks.map((navigationLink) => (
+                <a key={navigationLink.label} className="nav-link" href={navigationLink.href} target="_blank" rel="noreferrer">
+                  {navigationLink.label}
+                </a>
+              ))}
+            </div>
 
-        <section className="hero-section">
+            <div className="nav-desktop-actions">
+              <LinkButton href="#latest-updates" variant="ghost" className="nav-inline-action">
+                Latest updates
+              </LinkButton>
+              <LinkButton href={appStoreUrl} variant="primary" className="nav-inline-action">
+                Install app
+              </LinkButton>
+            </div>
+
+            <div className="nav-mobile-actions">
+              <LinkButton href={appStoreUrl} variant="primary" className="nav-mobile-cta">
+                Install
+              </LinkButton>
+              <MobileNavigation />
+            </div>
+          </nav>
+        </header>
+
+        <section className="hero-section" id="top">
           <div className="hero-background-orb hero-background-orb-left" />
           <div className="hero-background-orb hero-background-orb-right" />
 
           <div className="hero-topbar">
             <span className="brand-caption">Product changelog</span>
-            <a className="ghost-link" href="#latest-updates">
-              Latest updates
-            </a>
+            <Surface className="hero-announcement">
+              <Sparkles size={16} strokeWidth={2.1} />
+              <span>Shipping clearer bundle experiences for merchants every week</span>
+            </Surface>
           </div>
 
-          <div className="hero-grid hero-grid-simple">
-            <div className="hero-copy-column hero-copy-column-simple">
+          <div className="hero-grid">
+            <div className="hero-copy-column">
               <span className="eyebrow">What&apos;s new</span>
               <h1>Product updates that help merchants launch better bundles, faster</h1>
               <p className="hero-copy">
-                Follow the latest FoxSell launches, refinements, and fixes in one clean stream built for merchants who want clarity, not clutter.
+                Follow the latest FoxSell launches, refinements, and fixes in one polished stream built for merchants who want clarity, not clutter.
               </p>
 
               <div className="hero-actions">
-                <a className="primary-action" href="#featured-release">
+                <LinkButton href="#featured-release" variant="primary">
                   Read featured release
-                </a>
-                <a className="secondary-action" href="#latest-updates">
+                  <ArrowRight size={18} strokeWidth={2.2} />
+                </LinkButton>
+                <LinkButton href="#latest-updates" variant="secondary">
                   Browse the archive
-                </a>
+                </LinkButton>
               </div>
             </div>
+
+            <Surface className="hero-panel">
+              <div className="hero-panel-header">
+                <span className="hero-panel-kicker">At a glance</span>
+                <span className="hero-panel-status">Live</span>
+              </div>
+              <div className="hero-stats-grid">
+                {heroStats.map((heroStat) => (
+                  <div className="hero-stat" key={heroStat.label}>
+                    <span className="hero-stat-label">{heroStat.label}</span>
+                    <strong className="hero-stat-value">{heroStat.value}</strong>
+                    <p>{heroStat.detail}</p>
+                  </div>
+                ))}
+              </div>
+            </Surface>
           </div>
         </section>
 
@@ -178,20 +335,22 @@ export default function Home() {
             </div>
           </div>
 
-          <article className="featured-card featured-card-simple">
-            <div className="entry-header">
-              <div>
-                <div className="entry-date">{featuredStory.date}</div>
+          <Surface asChild>
+            <article className="featured-card">
+              <div className="entry-header">
+                <div>
+                  <div className="entry-date">{featuredStory.date}</div>
+                </div>
+                <span className="entry-tag">{featuredStory.tag}</span>
               </div>
-              <span className="entry-tag">{featuredStory.tag}</span>
-            </div>
-            <p>{featuredStory.summary}</p>
-            <ul>
-              {featuredStory.bullets.map((bullet) => (
-                <li key={bullet}>{bullet}</li>
-              ))}
-            </ul>
-          </article>
+              <p>{featuredStory.summary}</p>
+              <ul>
+                {featuredStory.bullets.map((bullet) => (
+                  <li key={bullet}>{bullet}</li>
+                ))}
+              </ul>
+            </article>
+          </Surface>
         </section>
 
         <section className="timeline-section" id="latest-updates">
@@ -210,22 +369,24 @@ export default function Home() {
 
             <div className="timeline-list">
               {changelogEntries.map((entry) => (
-                <article className="entry-card" key={entry.title}>
-                  <div className="entry-card-marker" />
-                  <div className="entry-header">
-                    <div>
-                      <div className="entry-date">{entry.date}</div>
-                      <h3>{entry.title}</h3>
+                <Surface asChild key={entry.title}>
+                  <article className="entry-card">
+                    <div className="entry-card-marker" />
+                    <div className="entry-header">
+                      <div>
+                        <div className="entry-date">{entry.date}</div>
+                        <h3>{entry.title}</h3>
+                      </div>
+                      <span className="entry-tag">{entry.tag}</span>
                     </div>
-                    <span className="entry-tag">{entry.tag}</span>
-                  </div>
-                  <p>{entry.summary}</p>
-                  <ul>
-                    {entry.bullets.map((bullet) => (
-                      <li key={bullet}>{bullet}</li>
-                    ))}
-                  </ul>
-                </article>
+                    <p>{entry.summary}</p>
+                    <ul>
+                      {entry.bullets.map((bullet) => (
+                        <li key={bullet}>{bullet}</li>
+                      ))}
+                    </ul>
+                  </article>
+                </Surface>
               ))}
             </div>
           </div>
