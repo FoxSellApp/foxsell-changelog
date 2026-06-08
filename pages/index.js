@@ -6,19 +6,31 @@ import clsx from "clsx"
 import { ArrowRight, ExternalLink, Menu, Sparkles, X } from "lucide-react"
 
 const featuredStory = {
-  date: "June 2, 2026",
-  tag: "Launch",
-  title: "A cleaner, faster dashboard home for getting started",
+  date: "June 8, 2026",
+  tag: "Improvement",
+  title: "Bundle Configuration and Validation Improvements",
   summary:
-    "We refreshed the first-touch FoxSell dashboard experience so merchants can get oriented faster, understand what to do next, and launch value with less wandering.",
+    "We’ve improved the Mix and Match Bundle details in the Bundle Configuration Block on the Shopify Admin Product Page to make bundle setup clearer and easier to manage while editing products in Shopify Admin.",
   bullets: [
-    "A more focused home experience that brings setup momentum closer to the surface",
-    "Clearer guidance for the first actions that matter after install",
-    "A cleaner visual hierarchy that makes the dashboard feel faster and more polished"
+    "More complete and intuitive bundle information now appears directly within the configuration block",
+    "Merchants can review how Mix and Match bundles are structured without jumping between screens",
+    "Stronger validation now blocks invalid bundle configurations from being purchased or added to cart"
   ]
 }
 
 const changelogEntries = [
+  {
+    date: "June 8, 2026",
+    tag: "Improvement",
+    title: "Bundle Configuration and Validation Improvements",
+    summary:
+      "We improved Mix and Match bundle visibility in Shopify Admin and strengthened purchase validation so merchants can manage bundle setups more confidently and shoppers can only buy valid configurations.",
+    bullets: [
+      "Bundle details are clearer and easier to review inside the Shopify Admin product configuration block",
+      "Merchants get better bundle context during editing without needing to switch between screens",
+      "Invalid bundle configurations can no longer be purchased, reducing broken bundle checkouts"
+    ]
+  },
   {
     date: "May 16, 2026",
     tag: "Launch",
