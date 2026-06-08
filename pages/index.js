@@ -32,6 +32,18 @@ const changelogEntries = [
     ]
   },
   {
+    date: "June 2, 2026",
+    tag: "Launch",
+    title: "A cleaner, faster dashboard home for getting started",
+    summary:
+      "We refreshed the first-touch FoxSell dashboard experience so merchants can get oriented faster, understand what to do next, and launch value with less wandering.",
+    bullets: [
+      "A more focused home experience that brings setup momentum closer to the surface",
+      "Clearer guidance for the first actions that matter after install",
+      "A cleaner visual hierarchy that makes the dashboard feel faster and more polished"
+    ]
+  },
+  {
     date: "May 16, 2026",
     tag: "Launch",
     title: "Guided bundle templates to help you launch faster",
