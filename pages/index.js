@@ -6,19 +6,43 @@ import clsx from "clsx"
 import { ArrowRight, ExternalLink, Menu, Sparkles, X } from "lucide-react"
 
 const featuredStory = {
-  date: "June 8, 2026",
-  tag: "Improvement",
-  title: "Bundle Configuration and Validation Improvements",
+  date: "June 12, 2026",
+  tag: "Launch",
+  title: "Smarter POS bundle editing for step and glow offers",
   summary:
-    "We’ve improved the Mix and Match Bundle details in the Bundle Configuration Block on the Shopify Admin Product Page to make bundle setup clearer and easier to manage while editing products in Shopify Admin.",
+    "We upgraded the FoxSell POS bundle editor so staff can build and update step-based and glow-style bundles with clearer guidance, better pricing visibility, and more reliable tier handling.",
   bullets: [
-    "More complete and intuitive bundle information now appears directly within the configuration block",
-    "Merchants can review how Mix and Match bundles are structured without jumping between screens",
-    "Stronger validation now blocks invalid bundle configurations from being purchased or added to cart"
+    "POS now supports step and glow bundle configurations with quantity-aware guidance built into the editing flow",
+    "Glow bundles automatically resolve the right tier as products are added, with clearer ladder-style tier visibility",
+    "Bundle edits now preserve the correct tier discount and bundle variant when quantities change"
   ]
 }
 
 const changelogEntries = [
+  {
+    date: "June 12, 2026",
+    tag: "Launch",
+    title: "Smarter POS bundle editing for step and glow offers",
+    summary:
+      "The FoxSell POS bundle editor now gives staff a clearer way to configure step-based and glow bundle offers, while automatically keeping tier pricing and validation aligned with what was selected.",
+    bullets: [
+      "Step and glow bundle templates are now supported directly in POS bundle configuration and edit flows",
+      "Tier ladders, quantity rules, and add-on pricing are surfaced more clearly so staff can build bundles with fewer mistakes",
+      "Editing a bundle now keeps the correct tier discount and updates the underlying bundle variant when quantity thresholds change"
+    ]
+  },
+  {
+    date: "June 12, 2026",
+    tag: "Improvement",
+    title: "Clearer quantity limits across bundle setup screens",
+    summary:
+      "We refined how bundle quantity limits are shown so merchants and staff can understand flexible quantity ranges more easily, including step-based offers with effectively unlimited upper bounds.",
+    bullets: [
+      "Very high step quantity caps now display as infinity instead of confusing raw values",
+      "Category and tier guidance is easier to read while configuring or editing bundles",
+      "POS product selection screens now make it clearer when more items can still be added or when a limit has been reached"
+    ]
+  },
   {
     date: "June 8, 2026",
     tag: "Improvement",
