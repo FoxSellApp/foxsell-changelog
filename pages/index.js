@@ -6,19 +6,43 @@ import clsx from "clsx"
 import { ArrowRight, ExternalLink, Menu, Sparkles, X } from "lucide-react"
 
 const featuredStory = {
-  date: "June 12, 2026",
+  date: "July 6, 2026",
   tag: "Launch",
-  title: "Smarter POS bundle editing for step and glow offers",
+  title: "Fixed bundles with infinite variant choices",
   summary:
-    "We upgraded the FoxSell POS bundle editor so staff can build and update step-based and glow-style bundles with clearer guidance, better pricing visibility, and more reliable tier handling.",
+    "We added a new product-page bundle template for fixed bundles with variant selection, optional add-ons, and guided setup that adapts to each merchant's Shopify theme.",
   bullets: [
-    "POS now supports step and glow bundle configurations with quantity-aware guidance built into the editing flow",
-    "Glow bundles automatically resolve the right tier as products are added, with clearer ladder-style tier visibility",
-    "Bundle edits now preserve the correct tier discount and bundle variant when quantities change"
+    "The new Fixed Bundle with Infinite Variants template lets shoppers choose variants directly on the product page",
+    "Merchants can configure fixed-price or percentage-discount bundles with always-included or optional add-ons",
+    "Theme setup now detects whether automatic block setup is available and offers team help when manual setup is needed"
   ]
 }
 
 const changelogEntries = [
+  {
+    date: "July 6, 2026",
+    tag: "Launch",
+    title: "Fixed bundles with infinite variant choices",
+    summary:
+      "A new product-page template helps merchants sell curated fixed bundles while still giving shoppers flexible variant choices for each included product.",
+    bullets: [
+      "Fixed Bundle with Infinite Variants is now available in the mix-and-match template gallery",
+      "Merchants can choose fixed bundle pricing or a percentage discount off the selected products",
+      "Add-ons and free gifts can be configured as always included or optional choices on the product page"
+    ]
+  },
+  {
+    date: "July 6, 2026",
+    tag: "Fixes",
+    title: "Smoother bundle setup, saving, and cleanup",
+    summary:
+      "We tightened several dashboard flows so merchants get clearer setup guidance and land in the right place after creating, saving, or deleting bundles.",
+    bullets: [
+      "Template installation guidance now separates section-based setup from product-block setup for compatible Shopify themes",
+      "Bundle creation redirects now wait for the save state to clear before opening the new bundle",
+      "Delete dialogs now close more reliably before returning merchants to the bundle list"
+    ]
+  },
   {
     date: "June 12, 2026",
     tag: "Launch",
