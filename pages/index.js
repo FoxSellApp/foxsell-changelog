@@ -6,19 +6,31 @@ import clsx from "clsx"
 import { ArrowRight, ExternalLink, Menu, Sparkles, X } from "lucide-react"
 
 const featuredStory = {
-  date: "July 6, 2026",
-  tag: "Launch",
-  title: "Fixed bundles with infinite variant choices",
+  date: "July 7, 2026",
+  tag: "Improvement",
+  title: "Video tutorials and steadier template setup",
   summary:
-    "We added a new product-page bundle template for fixed bundles with variant selection, optional add-ons, and guided setup that adapts to each merchant's Shopify theme.",
+    "Template setup now has clearer in-app video guidance, stronger save behavior, and smoother configuration for Glow, Step, and Shade bundles.",
   bullets: [
-    "The new Fixed Bundle with Infinite Variants template lets shoppers choose variants directly on the product page",
-    "Merchants can configure fixed-price or percentage-discount bundles with always-included or optional add-ons",
-    "Theme setup now detects whether automatic block setup is available and offers team help when manual setup is needed"
+    "Setup screens now link directly to template-specific video tutorials for Glow, Step, and Shade",
+    "The Help page and home resources now surface the current FoxSell tutorial collection for Dashboard V2 merchants",
+    "Step template setup now handles automatic add-ons, step titles, and save-bar state more reliably while merchants configure offers"
   ]
 }
 
 const changelogEntries = [
+  {
+    date: "July 7, 2026",
+    tag: "Improvement",
+    title: "Video tutorials and steadier template setup",
+    summary:
+      "We added tutorial entry points across the dashboard and tightened template setup flows so merchants can configure offers with clearer guidance and fewer interruptions.",
+    bullets: [
+      "Glow, Step, and Shade setup pages now include direct video tutorial links near the bundle details",
+      "Dashboard help resources now route Dashboard V2 merchants to the current FoxSell tutorial collection",
+      "Template setup is more stable when saving edits, detecting theme support, and configuring Step automatic add-ons"
+    ]
+  },
   {
     date: "July 6, 2026",
     tag: "Launch",
