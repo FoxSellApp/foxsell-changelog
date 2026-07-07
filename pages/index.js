@@ -10,11 +10,11 @@ const featuredStory = {
   tag: "Improvement",
   title: "Video tutorials and steadier template setup",
   summary:
-    "Template setup now has clearer in-app video guidance, stronger save behavior, and smoother configuration for Glow, Step, and Shade bundles.",
+    "Template setup now has clearer in-app video guidance, stronger save behavior, and smoother configuration across Tiered Bundle Builder, Guided Steps Bundle Builder, and Fixed Bundle with Infinite Variants.",
   bullets: [
-    "Setup screens now link directly to template-specific video tutorials for Glow, Step, and Shade",
+    "Setup screens now link directly to template-specific video tutorials for Tiered Bundle Builder, Guided Steps Bundle Builder, and Fixed Bundle with Infinite Variants",
     "The Help page and home resources now surface the current FoxSell tutorial collection for Dashboard V2 merchants",
-    "Step template setup now handles automatic add-ons, step titles, and save-bar state more reliably while merchants configure offers"
+    "Guided Steps Bundle Builder setup now handles automatic add-ons, step titles, and save-bar state more reliably while merchants configure offers"
   ]
 }
 
@@ -26,9 +26,9 @@ const changelogEntries = [
     summary:
       "We added tutorial entry points across the dashboard and tightened template setup flows so merchants can configure offers with clearer guidance and fewer interruptions.",
     bullets: [
-      "Glow, Step, and Shade setup pages now include direct video tutorial links near the bundle details",
+      "Tiered Bundle Builder, Guided Steps Bundle Builder, and Fixed Bundle with Infinite Variants setup pages now include direct video tutorial links near the bundle details",
       "Dashboard help resources now route Dashboard V2 merchants to the current FoxSell tutorial collection",
-      "Template setup is more stable when saving edits, detecting theme support, and configuring Step automatic add-ons"
+      "Template setup is more stable when saving edits, detecting theme support, and configuring Guided Steps automatic add-ons"
     ]
   },
   {
@@ -58,11 +58,11 @@ const changelogEntries = [
   {
     date: "June 12, 2026",
     tag: "Launch",
-    title: "Smarter POS bundle editing for step and glow offers",
+    title: "Smarter POS bundle editing for guided steps and tiered offers",
     summary:
-      "The FoxSell POS bundle editor now gives staff a clearer way to configure step-based and glow bundle offers, while automatically keeping tier pricing and validation aligned with what was selected.",
+      "The FoxSell POS bundle editor now gives staff a clearer way to configure guided steps and tiered bundle offers, while automatically keeping tier pricing and validation aligned with what was selected.",
     bullets: [
-      "Step and glow bundle templates are now supported directly in POS bundle configuration and edit flows",
+      "Guided Steps Bundle Builder and Tiered Bundle Builder offers are now supported directly in POS bundle configuration and edit flows",
       "Tier ladders, quantity rules, and add-on pricing are surfaced more clearly so staff can build bundles with fewer mistakes",
       "Editing a bundle now keeps the correct tier discount and updates the underlying bundle variant when quantity thresholds change"
     ]
@@ -72,9 +72,9 @@ const changelogEntries = [
     tag: "Improvement",
     title: "Clearer quantity limits across bundle setup screens",
     summary:
-      "We refined how bundle quantity limits are shown so merchants and staff can understand flexible quantity ranges more easily, including step-based offers with effectively unlimited upper bounds.",
+      "We refined how bundle quantity limits are shown so merchants and staff can understand flexible quantity ranges more easily, including Guided Steps Bundle Builder offers with effectively unlimited upper bounds.",
     bullets: [
-      "Very high step quantity caps now display as infinity instead of confusing raw values",
+      "Very high guided-step quantity caps now display as infinity instead of confusing raw values",
       "Category and tier guidance is easier to read while configuring or editing bundles",
       "POS product selection screens now make it clearer when more items can still be added or when a limit has been reached"
     ]
