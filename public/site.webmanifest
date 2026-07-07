@@ -3,6 +3,11 @@
   "short_name": "FoxSell",
   "icons": [
     {
+      "src": "/favicon.svg",
+      "sizes": "96x96",
+      "type": "image/svg+xml"
+    },
+    {
       "src": "/favicon-32x32.png",
       "sizes": "32x32",
       "type": "image/png"

@@ -331,6 +331,7 @@ export default function Home() {
         <meta name="twitter:image" content={socialPreviewImageUrl} />
         <meta name="twitter:image:alt" content="FoxSell changelog social preview with branded product update artwork" />
         <link rel="canonical" href={changelogUrl} />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
