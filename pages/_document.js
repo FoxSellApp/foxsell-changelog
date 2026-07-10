@@ -22,7 +22,7 @@ export default function Document() {
         <meta name="theme-color" content="#f15d22" />
         <meta
           name="description"
-          content="Merchant-facing product updates, launches, and improvements from FoxSell."
+          content="Merchant-friendly product updates, launches, and improvements from FoxSell."
         />
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />

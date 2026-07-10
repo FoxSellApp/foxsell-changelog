@@ -336,17 +336,17 @@ const spotlightCards = [
   {
     icon: Layers3,
     label: "Bundle templates",
-    copy: "Template setup, guided steps, fixed bundles, and merchant-facing launch flows."
+    copy: "New ways to launch offers faster, with clearer setup from preview to publish."
   },
   {
     icon: Store,
     label: "Storefront polish",
-    copy: "Shopper option states, bundle summaries, and validation improvements."
+    copy: "Updates that make bundle choices easier for shoppers to understand."
   },
   {
     icon: CheckCircle2,
-    label: "Operational fixes",
-    copy: "Save reliability, cleanup paths, POS editing, and admin review clarity."
+    label: "Reliability fixes",
+    copy: "Cleaner saving, editing, and admin flows for day-to-day bundle management."
   }
 ]
 
@@ -443,7 +443,7 @@ function NavMenu() {
             </SheetClose>
           </div>
           <SheetTitle>FoxSell changelog</SheetTitle>
-          <SheetDescription>Product updates, launch notes, and merchant-facing improvements.</SheetDescription>
+          <SheetDescription>Product updates, launch notes, and improvements for merchants.</SheetDescription>
         </SheetHeader>
 
         <div className="sheet-link-list">
@@ -589,13 +589,13 @@ export default function Home() {
         <title>FoxSell Changelog</title>
         <meta
           name="description"
-          content="Merchant-facing product updates from FoxSell, redesigned into a polished public changelog experience."
+          content="Merchant-friendly product updates from FoxSell, including launches, storefront improvements, and reliability fixes."
         />
         <meta name="color-scheme" content="light dark" />
         <meta property="og:title" content="FoxSell Changelog" />
         <meta
           property="og:description"
-          content="Browse the latest FoxSell launches, improvements, and fixes in a premium merchant-friendly changelog."
+          content="Browse the latest FoxSell launches, storefront improvements, and reliability fixes for merchants."
         />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={changelogUrl} />
@@ -609,7 +609,7 @@ export default function Home() {
         <meta name="twitter:title" content="FoxSell Changelog" />
         <meta
           name="twitter:description"
-          content="Browse the latest FoxSell launches, improvements, and fixes in a premium merchant-friendly changelog."
+          content="Browse the latest FoxSell launches, storefront improvements, and reliability fixes for merchants."
         />
         <meta name="twitter:image" content={socialPreviewImageUrl} />
         <meta name="twitter:image:alt" content="FoxSell changelog social preview showing product update cards and release highlights" />
@@ -664,9 +664,9 @@ export default function Home() {
               <Sparkles size={14} strokeWidth={2.25} />
               Product changelog
             </Badge>
-            <h1>Every FoxSell release, organized for merchants who are building momentum.</h1>
+            <h1>FoxSell product updates, organized for busy merchants.</h1>
             <p>
-              Track launches, storefront improvements, and reliability fixes in a shadcn-powered release desk that keeps the FoxSell brand familiar while making the changelog easier to scan.
+              Follow new launches, storefront improvements, and reliability fixes in one simple place, with the details that help you decide what to try next.
             </p>
             <div className="hero-actions">
               <Button asChild size="lg">
@@ -684,7 +684,7 @@ export default function Home() {
           <Card className="release-console">
             <CardHeader>
               <div className="release-console-topline">
-                <span>Release desk</span>
+                <span>Latest update</span>
                 <Badge variant="success">Live</Badge>
               </div>
               <CardTitle>{featuredStory.title}</CardTitle>
@@ -702,7 +702,7 @@ export default function Home() {
             </CardContent>
             <CardFooter>
               <a href="#latest-updates" className="console-link">
-                Browse the full release archive
+                Browse all updates
                 <ChevronRight size={16} strokeWidth={2.25} />
               </a>
             </CardFooter>
