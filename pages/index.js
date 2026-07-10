@@ -748,6 +748,17 @@ export default function Home() {
               </TabsList>
             </Tabs>
 
+            <label className="mobile-category-filter">
+              <span>Category</span>
+              <select value={selectedCategory} onChange={(event) => setSelectedCategory(event.target.value)}>
+                {categoryTabs.map((category) => (
+                  <option value={category} key={category}>
+                    {category}
+                  </option>
+                ))}
+              </select>
+            </label>
+
             <Tabs value={releaseView} onValueChange={setReleaseView} className="view-tabs">
               <TabsList aria-label="Choose changelog presentation">
                 <TabsTrigger value="Cards">Cards</TabsTrigger>
