@@ -39,6 +39,14 @@ const featuredStory = {
 }
 
 const releaseImages = {
+  changelogFeature: {
+    src: "/assets/foxsell-changelog-feature.png",
+    alt: "FoxSell changelog feature artwork showing product update cards and release highlights",
+    caption: "FoxSell changelog feature artwork",
+    sourceUrl: "/assets/foxsell-changelog-feature.png",
+    width: 1774,
+    height: 887
+  },
   tieredTemplate: {
     src: "https://raw.githubusercontent.com/knox-the-fox/foxsell-helpdoc-assets/master/supercut-bundle-builders-2026-07-08-refresh/tiered-template-31s.jpg",
     alt: "FoxSell help docs showing the Tiered Bundle Builder setup template selection screen",
@@ -416,8 +424,8 @@ function ReleaseImage({ image, compact = false }) {
 
   return (
     <figure className={compact ? "release-image release-image-compact" : "release-image"}>
-      <a href={image.sourceUrl} target="_blank" rel="noreferrer" aria-label={`Open help doc source for ${image.caption}`}>
-        <Image src={image.src} alt={image.alt} width={640} height={360} sizes="(max-width: 700px) 100vw, 420px" />
+      <a href={image.sourceUrl} target="_blank" rel="noreferrer" aria-label={`Open image source for ${image.caption}`}>
+        <Image src={image.src} alt={image.alt} width={image.width ?? 640} height={image.height ?? 360} sizes="(max-width: 700px) 100vw, 420px" />
       </a>
       <figcaption>{image.caption}</figcaption>
     </figure>
@@ -735,7 +743,7 @@ export default function Home() {
 
           <Card className="featured-card">
             <div className="featured-media">
-              <ReleaseImage image={releaseImages.tieredStorefront} compact />
+              <ReleaseImage image={releaseImages.changelogFeature} compact />
             </div>
             <div className="featured-content">
               <CardHeader>
