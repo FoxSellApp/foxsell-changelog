@@ -513,7 +513,7 @@ function TimelineView({ entries }) {
               <CardDescription>{entry.summary}</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="timeline-card-body">
+              <div className={entry.image ? "timeline-card-body" : "timeline-card-body timeline-card-body-text-only"}>
                 <ReleaseImage image={entry.image} compact />
                 <ul className="release-bullets">
                   {entry.bullets.map((bullet) => (
