@@ -1,5 +1,6 @@
 import Head from "next/head"
 import Image from "next/image"
+import { useEffect, useState } from "react"
 import {
   ArrowRight,
   CalendarDays,
@@ -8,9 +9,11 @@ import {
   ExternalLink,
   Layers3,
   Menu,
+  Moon,
   PackageCheck,
   Sparkles,
   Store,
+  Sun,
   Wrench,
   X
 } from "lucide-react"
@@ -186,6 +189,8 @@ const socialPreviewImageUrl = `${changelogUrl}/social-preview.png`
 const websiteUrl = "https://www.foxsell.com/?utm_source=foxsell_changelog&utm_medium=navbar&utm_campaign=public_changelog"
 const appStoreUrl = "https://apps.shopify.com/foxsell-bundles-plus?utm_source=foxsell_changelog&utm_medium=cta&utm_campaign=public_changelog"
 const helpDocsUrl = "https://help.foxsell.app/en/"
+const lightLogoUrl = "/assets/foxsell-logo.svg"
+const darkLogoUrl = "/assets/foxsell-logo-white.svg"
 
 const navigationLinks = [
   {
@@ -247,7 +252,35 @@ function ReleaseBadge({ tag }) {
   )
 }
 
-function NavMenu() {
+function FoxSellLogo({ isDarkMode, width = 144, height = 38, priority = false }) {
+  return (
+    <Image
+      src={isDarkMode ? darkLogoUrl : lightLogoUrl}
+      alt="FoxSell"
+      width={width}
+      height={height}
+      priority={priority}
+    />
+  )
+}
+
+function ThemeToggle({ isDarkMode, onToggle }) {
+  const nextTheme = isDarkMode ? "light" : "dark"
+
+  return (
+    <Button
+      type="button"
+      variant="outline"
+      size="icon"
+      aria-label={`Switch to ${nextTheme} mode`}
+      onClick={onToggle}
+    >
+      {isDarkMode ? <Sun size={17} strokeWidth={2.2} /> : <Moon size={17} strokeWidth={2.2} />}
+    </Button>
+  )
+}
+
+function NavMenu({ isDarkMode }) {
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -258,7 +291,7 @@ function NavMenu() {
       <SheetContent side="right">
         <SheetHeader>
           <div className="sheet-title-row">
-            <Image src="/assets/foxsell-logo.svg" alt="FoxSell" width={130} height={35} />
+            <FoxSellLogo isDarkMode={isDarkMode} width={130} height={35} />
             <SheetClose asChild>
               <Button variant="ghost" size="icon" aria-label="Close navigation menu">
                 <X size={18} strokeWidth={2.2} />
@@ -343,6 +376,30 @@ function ReleasePane({ value, entries }) {
 }
 
 export default function Home() {
+  const [theme, setTheme] = useState("light")
+
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(() => {
+      const storedTheme = window.localStorage.getItem("foxsell-changelog-theme")
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches
+      setTheme(storedTheme || (prefersDark ? "dark" : "light"))
+    })
+
+    return () => window.cancelAnimationFrame(frame)
+  }, [])
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme
+  }, [theme])
+
+  const isDarkMode = theme === "dark"
+
+  const toggleTheme = () => {
+    const updatedTheme = isDarkMode ? "light" : "dark"
+    window.localStorage.setItem("foxsell-changelog-theme", updatedTheme)
+    setTheme(updatedTheme)
+  }
+
   return (
     <>
       <Head>
@@ -351,6 +408,7 @@ export default function Home() {
           name="description"
           content="Merchant-facing product updates from FoxSell, redesigned into a polished public changelog experience."
         />
+        <meta name="color-scheme" content="light dark" />
         <meta property="og:title" content="FoxSell Changelog" />
         <meta
           property="og:description"
@@ -384,7 +442,7 @@ export default function Home() {
         <header className="site-header">
           <nav className="site-nav" aria-label="Primary navigation">
             <a className="nav-brand" href="#top" aria-label="Go to top of FoxSell changelog">
-              <Image src="/assets/foxsell-logo.svg" alt="FoxSell" width={144} height={38} priority />
+              <FoxSellLogo isDarkMode={isDarkMode} width={144} height={38} priority />
             </a>
 
             <div className="nav-links">
@@ -398,6 +456,7 @@ export default function Home() {
             </div>
 
             <div className="nav-actions">
+              <ThemeToggle isDarkMode={isDarkMode} onToggle={toggleTheme} />
               <Button asChild variant="secondary" size="sm">
                 <a href="#latest-updates">Latest updates</a>
               </Button>
@@ -410,7 +469,8 @@ export default function Home() {
             </div>
 
             <div className="mobile-menu">
-              <NavMenu />
+              <ThemeToggle isDarkMode={isDarkMode} onToggle={toggleTheme} />
+              <NavMenu isDarkMode={isDarkMode} />
             </div>
           </nav>
         </header>
