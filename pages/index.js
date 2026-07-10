@@ -1,6 +1,6 @@
 import Head from "next/head"
 import Image from "next/image"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import {
   ArrowRight,
   CalendarDays,
@@ -22,7 +22,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 const featuredStory = {
   date: "July 7, 2026",
@@ -37,6 +37,45 @@ const featuredStory = {
   ]
 }
 
+const releaseImages = {
+  tieredTemplate: {
+    src: "https://raw.githubusercontent.com/knox-the-fox/foxsell-helpdoc-assets/master/supercut-bundle-builders-2026-07-08-refresh/tiered-template-31s.jpg",
+    alt: "FoxSell help docs showing the Tiered Bundle Builder setup template selection screen",
+    caption: "Tiered Bundle Builder setup from the FoxSell help docs",
+    sourceUrl: "https://help.foxsell.app/en/article/how-to-set-up-tiered-bundle-builder-on-your-store-4zvwze/"
+  },
+  guidedStorefront: {
+    src: "https://raw.githubusercontent.com/knox-the-fox/foxsell-helpdoc-assets/master/supercut-bundle-builders-2026-07-08-refresh/guided-storefront-342s.jpg",
+    alt: "FoxSell help docs showing a Guided Steps Bundle Builder storefront preview",
+    caption: "Guided Steps storefront preview from the FoxSell help docs",
+    sourceUrl: "https://help.foxsell.app/en/article/how-to-set-up-guided-steps-bundle-builder-on-your-store-1mppgmx/"
+  },
+  fixedInfiniteVariantSetup: {
+    src: "https://raw.githubusercontent.com/knox-the-fox/foxsell-helpdoc-assets/master/03-products-addons-pricing.jpg",
+    alt: "FoxSell help docs showing products, add-ons, and pricing setup for a fixed bundle with infinite variants",
+    caption: "Fixed Bundle with Infinite Variants setup from the FoxSell help docs",
+    sourceUrl: "https://help.foxsell.app/en/article/how-to-set-up-fixed-bundle-with-infinite-variants-on-your-store-9eaxy8/"
+  },
+  fixedInfiniteVariantStorefront: {
+    src: "https://raw.githubusercontent.com/knox-the-fox/foxsell-helpdoc-assets/master/08-storefront-builder.jpg",
+    alt: "FoxSell help docs showing a storefront builder preview for Fixed Bundle with Infinite Variants",
+    caption: "Storefront builder preview from the FoxSell help docs",
+    sourceUrl: "https://help.foxsell.app/en/article/how-to-set-up-fixed-bundle-with-infinite-variants-on-your-store-9eaxy8/"
+  },
+  themeSwatches: {
+    src: "https://raw.githubusercontent.com/knox-the-fox/foxsell-helpdoc-assets/master/10-theme-settings-swatches.jpg",
+    alt: "FoxSell help docs showing theme settings for color swatches",
+    caption: "Theme swatch settings from the FoxSell help docs",
+    sourceUrl: "https://help.foxsell.app/en/article/how-to-set-up-fixed-bundle-with-infinite-variants-on-your-store-9eaxy8/"
+  },
+  sectionSetup: {
+    src: "https://raw.githubusercontent.com/knox-the-fox/foxsell-helpdoc-assets/master/supercut-bundle-builders-2026-07-08-refresh/tiered-section_settings-430s.jpg",
+    alt: "FoxSell help docs showing section settings for a Tiered Bundle Builder setup",
+    caption: "Theme section settings from the FoxSell help docs",
+    sourceUrl: "https://help.foxsell.app/en/article/how-to-set-up-tiered-bundle-builder-on-your-store-4zvwze/"
+  }
+}
+
 const changelogEntries = [
   {
     date: "July 7, 2026",
@@ -48,7 +87,8 @@ const changelogEntries = [
       "Tiered Bundle Builder, Guided Steps Bundle Builder, and Fixed Bundle with Infinite Variants setup pages now include direct video tutorial links near the bundle details",
       "Dashboard help resources now route Dashboard V2 merchants to the current FoxSell tutorial collection",
       "Template setup is more stable when saving edits, detecting theme support, and configuring Guided Steps automatic add-ons"
-    ]
+    ],
+    image: releaseImages.tieredTemplate
   },
   {
     date: "July 6, 2026",
@@ -60,7 +100,8 @@ const changelogEntries = [
       "Fixed Bundle with Infinite Variants is now available in the mix-and-match template gallery",
       "Merchants can choose fixed bundle pricing or a percentage discount off the selected products",
       "Add-ons and free gifts can be configured as always included or optional choices on the product page"
-    ]
+    ],
+    image: releaseImages.fixedInfiniteVariantStorefront
   },
   {
     date: "July 6, 2026",
@@ -72,7 +113,8 @@ const changelogEntries = [
       "Template installation guidance now separates section-based setup from product-block setup for compatible Shopify themes",
       "Bundle creation redirects now wait for the save state to clear before opening the new bundle",
       "Delete dialogs now close more reliably before returning merchants to the bundle list"
-    ]
+    ],
+    image: releaseImages.sectionSetup
   },
   {
     date: "June 12, 2026",
@@ -96,7 +138,8 @@ const changelogEntries = [
       "Very high guided-step quantity caps now display as infinity instead of confusing raw values",
       "Category and tier guidance is easier to read while configuring or editing bundles",
       "POS product selection screens now make it clearer when more items can still be added or when a limit has been reached"
-    ]
+    ],
+    image: releaseImages.guidedStorefront
   },
   {
     date: "June 8, 2026",
@@ -108,7 +151,8 @@ const changelogEntries = [
       "Bundle details are clearer and easier to review inside the Shopify Admin product configuration block",
       "Merchants get better bundle context during editing without needing to switch between screens",
       "Invalid bundle configurations can no longer be purchased, reducing broken bundle checkouts"
-    ]
+    ],
+    image: releaseImages.fixedInfiniteVariantSetup
   },
   {
     date: "June 2, 2026",
@@ -132,7 +176,8 @@ const changelogEntries = [
       "Structured setup flows for ready-to-use bundle templates",
       "A clearer path to preview, configure, and install template-based experiences",
       "Less friction when launching bundle layouts that already work well in real stores"
-    ]
+    ],
+    image: releaseImages.tieredTemplate
   },
   {
     date: "May 16, 2026",
@@ -144,7 +189,8 @@ const changelogEntries = [
       "Preview actions now feel more dependable and easier to follow",
       "Demo store links make templates easier to evaluate in a realistic storefront context",
       "Helpful guidance appears more naturally during template setup"
-    ]
+    ],
+    image: releaseImages.guidedStorefront
   },
   {
     date: "May 12, 2026",
@@ -156,7 +202,8 @@ const changelogEntries = [
       "Color swatches are now supported for qualifying option selections",
       "Bundle quantity and pricing details are presented more clearly in the summary experience",
       "Fixed-price bundle summaries stay cleaner by hiding item-level prices when they are not useful"
-    ]
+    ],
+    image: releaseImages.themeSwatches
   },
   {
     date: "May 12, 2026",
@@ -168,7 +215,8 @@ const changelogEntries = [
       "Add-ons now stay better aligned with the option choices shoppers actually make",
       "Invalid or unavailable add-on states are cleared more reliably",
       "Bundle interactions behave more predictably when quantities or options change"
-    ]
+    ],
+    image: releaseImages.fixedInfiniteVariantSetup
   },
   {
     date: "May 5, 2026",
@@ -180,7 +228,8 @@ const changelogEntries = [
       "Multi-variant bundles now handle empty variant states more gracefully",
       "Dynamic add-on bundle pricing edits are more dependable in supported configurations",
       "Per-option add-on setups now duplicate products more reliably in advanced bundle workflows"
-    ]
+    ],
+    image: releaseImages.fixedInfiniteVariantSetup
   }
 ]
 
@@ -286,6 +335,21 @@ function ThemeToggle({ isDarkMode, onToggle }) {
   )
 }
 
+function ReleaseImage({ image, compact = false }) {
+  if (!image) {
+    return null
+  }
+
+  return (
+    <figure className={compact ? "release-image release-image-compact" : "release-image"}>
+      <a href={image.sourceUrl} target="_blank" rel="noreferrer" aria-label={`Open help doc source for ${image.caption}`}>
+        <Image src={image.src} alt={image.alt} width={640} height={360} sizes="(max-width: 700px) 100vw, 420px" />
+      </a>
+      <figcaption>{image.caption}</figcaption>
+    </figure>
+  )
+}
+
 function NavMenu({ isDarkMode }) {
   return (
     <Sheet>
@@ -313,7 +377,7 @@ function NavMenu({ isDarkMode }) {
             <SheetClose asChild key={navigationLink.label}>
               <a className="sheet-link" href={navigationLink.href} target="_blank" rel="noreferrer">
                 <span>
-                  <strong>{navigationLink.label}</strong>
+                  <span className="sheet-link-label">{navigationLink.label}</span>
                   <small>{navigationLink.description}</small>
                 </span>
                 <ExternalLink size={16} strokeWidth={2.1} />
@@ -355,6 +419,7 @@ function ReleaseCard({ entry }) {
         <CardTitle>{entry.title}</CardTitle>
         <CardDescription>{entry.summary}</CardDescription>
       </CardHeader>
+      <ReleaseImage image={entry.image} />
       <CardContent>
         <ul className="release-bullets">
           {entry.bullets.map((bullet) => (
@@ -369,20 +434,60 @@ function ReleaseCard({ entry }) {
   )
 }
 
-function ReleasePane({ value, entries }) {
+function ReleaseGrid({ entries }) {
   return (
-    <TabsContent value={value}>
-      <div className="release-grid">
-        {entries.map((entry) => (
-          <ReleaseCard key={`${value}-${entry.date}-${entry.title}`} entry={entry} />
-        ))}
-      </div>
-    </TabsContent>
+    <div className="release-grid">
+      {entries.map((entry) => (
+        <ReleaseCard key={`${entry.date}-${entry.title}`} entry={entry} />
+      ))}
+    </div>
+  )
+}
+
+function TimelineView({ entries }) {
+  return (
+    <div className="release-timeline">
+      {entries.map((entry) => (
+        <article className="timeline-entry" key={`${entry.date}-${entry.title}`}>
+          <div className="timeline-rail" aria-hidden="true">
+            <span />
+          </div>
+          <Card className="timeline-card">
+            <CardHeader>
+              <div className="release-card-meta">
+                <span className="release-date">
+                  <CalendarDays size={15} strokeWidth={2.1} />
+                  {entry.date}
+                </span>
+                <ReleaseBadge tag={entry.tag} />
+              </div>
+              <CardTitle>{entry.title}</CardTitle>
+              <CardDescription>{entry.summary}</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="timeline-card-body">
+                <ReleaseImage image={entry.image} compact />
+                <ul className="release-bullets">
+                  {entry.bullets.map((bullet) => (
+                    <li key={bullet}>
+                      <CheckCircle2 size={16} strokeWidth={2.35} />
+                      <span>{bullet}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </CardContent>
+          </Card>
+        </article>
+      ))}
+    </div>
   )
 }
 
 export default function Home() {
   const [theme, setTheme] = useState("light")
+  const [selectedCategory, setSelectedCategory] = useState("All")
+  const [releaseView, setReleaseView] = useState("Timeline")
 
   useEffect(() => {
     const frame = window.requestAnimationFrame(() => {
@@ -399,6 +504,13 @@ export default function Home() {
   }, [theme])
 
   const isDarkMode = theme === "dark"
+  const filteredEntries = useMemo(() => {
+    if (selectedCategory === "All") {
+      return changelogEntries
+    }
+
+    return changelogEntries.filter((entry) => entry.tag === selectedCategory)
+  }, [selectedCategory])
 
   const toggleTheme = () => {
     const updatedTheme = isDarkMode ? "light" : "dark"
@@ -569,6 +681,7 @@ export default function Home() {
               <CardDescription>{featuredStory.summary}</CardDescription>
             </CardHeader>
             <CardContent>
+              <ReleaseImage image={releaseImages.tieredTemplate} compact />
               <ul className="featured-bullets">
                 {featuredStory.bullets.map((bullet) => (
                   <li key={bullet}>
@@ -587,23 +700,26 @@ export default function Home() {
             <h2>Filter updates by the work your team cares about.</h2>
           </div>
 
-          <Tabs defaultValue="All" className="release-tabs">
-            <TabsList aria-label="Filter changelog entries">
-              {categoryTabs.map((category) => (
-                <TabsTrigger value={category} key={category}>
-                  {category}
-                </TabsTrigger>
-              ))}
-            </TabsList>
+          <div className="archive-controls">
+            <Tabs value={selectedCategory} onValueChange={setSelectedCategory} className="category-tabs">
+              <TabsList aria-label="Filter changelog entries">
+                {categoryTabs.map((category) => (
+                  <TabsTrigger value={category} key={category}>
+                    {category}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+            </Tabs>
 
-            {categoryTabs.map((category) => (
-              <ReleasePane
-                key={category}
-                value={category}
-                entries={category === "All" ? changelogEntries : changelogEntries.filter((entry) => entry.tag === category)}
-              />
-            ))}
-          </Tabs>
+            <Tabs value={releaseView} onValueChange={setReleaseView} className="view-tabs">
+              <TabsList aria-label="Choose changelog presentation">
+                <TabsTrigger value="Cards">Cards</TabsTrigger>
+                <TabsTrigger value="Timeline">Timeline</TabsTrigger>
+              </TabsList>
+            </Tabs>
+          </div>
+
+          {releaseView === "Timeline" ? <TimelineView entries={filteredEntries} /> : <ReleaseGrid entries={filteredEntries} />}
         </section>
       </main>
     </>

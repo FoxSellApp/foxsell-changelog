@@ -29,6 +29,13 @@
   --soft-surface: #fffaf6;
   --white-surface: rgba(255, 255, 255, 0.86);
   --white-surface-strong: #ffffff;
+  --release-console-surface: rgba(255, 255, 255, 0.9);
+  --release-console-surface-soft: rgba(255, 247, 240, 0.96);
+  --release-console-foreground: #1f1713;
+  --release-console-muted: #6b5f57;
+  --release-console-border: rgba(241, 93, 34, 0.18);
+  --release-console-metric: rgba(241, 93, 34, 0.08);
+  --release-console-link: #c84712;
   --dark-surface: #16110f;
   --dark-surface-soft: #211815;
   --dark-surface-foreground: #fffaf6;
@@ -68,6 +75,13 @@ html[data-theme="dark"] {
   --soft-surface: #1b2022;
   --white-surface: rgba(23, 27, 29, 0.9);
   --white-surface-strong: #202527;
+  --release-console-surface: #111618;
+  --release-console-surface-soft: #1a2022;
+  --release-console-foreground: #fffaf6;
+  --release-console-muted: rgba(255, 250, 246, 0.78);
+  --release-console-border: rgba(255, 250, 246, 0.14);
+  --release-console-metric: rgba(255, 250, 246, 0.07);
+  --release-console-link: #ff9a67;
   --dark-surface: #111618;
   --dark-surface-soft: #1a2022;
   --dark-surface-foreground: #fffaf6;
@@ -276,17 +290,17 @@ img {
 .release-console {
   align-self: stretch;
   background:
-    linear-gradient(180deg, color-mix(in srgb, var(--dark-surface) 96%, transparent), color-mix(in srgb, var(--dark-surface-soft) 96%, transparent)),
-    var(--dark-surface);
-  color: var(--dark-surface-foreground);
+    linear-gradient(180deg, color-mix(in srgb, var(--release-console-surface) 96%, transparent), color-mix(in srgb, var(--release-console-surface-soft) 96%, transparent)),
+    var(--release-console-surface);
+  color: var(--release-console-foreground);
 }
 
 .release-console .ui-card-title {
-  color: var(--dark-surface-foreground);
+  color: var(--release-console-foreground);
 }
 
 .release-console .ui-card-description {
-  color: var(--dark-surface-muted);
+  color: var(--release-console-muted);
 }
 
 .release-console-topline,
@@ -299,9 +313,9 @@ img {
 }
 
 .release-console-topline {
-  color: var(--dark-surface-muted);
+  color: var(--release-console-muted);
   font-size: 12px;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
@@ -316,19 +330,19 @@ img {
   display: grid;
   gap: 4px;
   padding: 14px;
-  border: 1px solid color-mix(in srgb, var(--dark-surface-foreground) 14%, transparent);
+  border: 1px solid var(--release-console-border);
   border-radius: var(--radius);
-  background: color-mix(in srgb, var(--dark-surface-foreground) 7%, transparent);
+  background: var(--release-console-metric);
 }
 
 .console-metric strong {
-  color: var(--dark-surface-foreground);
+  color: var(--release-console-foreground);
   font-size: 28px;
   line-height: 1;
 }
 
 .console-metric span {
-  color: var(--dark-surface-muted);
+  color: var(--release-console-muted);
   font-size: 12px;
   line-height: 1.4;
 }
@@ -337,8 +351,8 @@ img {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  color: #ff9a67;
-  font-weight: 800;
+  color: var(--release-console-link);
+  font-weight: 650;
 }
 
 .spotlight-section {
@@ -400,6 +414,8 @@ img {
 }
 
 .featured-card .ui-card-content {
+  display: grid;
+  gap: 18px;
   border-left: 1px solid var(--border);
   background: var(--soft-surface);
 }
@@ -434,6 +450,20 @@ img {
   gap: 18px;
 }
 
+.archive-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.category-tabs,
+.view-tabs {
+  min-width: 0;
+}
+
 .release-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -442,6 +472,7 @@ img {
 
 .release-card {
   min-height: 100%;
+  overflow: hidden;
 }
 
 .release-card-meta {
@@ -455,6 +486,92 @@ img {
   color: var(--muted-foreground);
   font-size: 13px;
   font-weight: 700;
+}
+
+.release-image {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0 24px 20px;
+}
+
+.release-image a {
+  display: block;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--soft-surface);
+}
+
+.release-image img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.release-image figcaption {
+  color: var(--muted-foreground);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.release-image-compact {
+  padding: 0;
+}
+
+.release-timeline {
+  position: relative;
+  display: grid;
+  gap: 18px;
+}
+
+.timeline-entry {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 14px;
+}
+
+.timeline-rail {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  padding-top: 28px;
+}
+
+.timeline-rail::before {
+  position: absolute;
+  top: 0;
+  bottom: -18px;
+  width: 1px;
+  background: var(--border);
+  content: "";
+}
+
+.timeline-entry:last-child .timeline-rail::before {
+  bottom: calc(100% - 40px);
+}
+
+.timeline-rail span {
+  position: relative;
+  z-index: 1;
+  width: 15px;
+  height: 15px;
+  border: 3px solid var(--background);
+  border-radius: 999px;
+  background: var(--primary);
+  box-shadow: 0 0 0 1px var(--border);
+}
+
+.timeline-card {
+  overflow: hidden;
+}
+
+.timeline-card-body {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.42fr) minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
 }
 
 .sheet-link-list {
@@ -477,6 +594,10 @@ img {
 .sheet-link span {
   display: grid;
   gap: 4px;
+}
+
+.sheet-link-label {
+  font-weight: 500;
 }
 
 .sheet-link small {
@@ -514,7 +635,7 @@ img {
   border: 1px solid transparent;
   border-radius: var(--radius);
   cursor: pointer;
-  font-weight: 800;
+  font-weight: 500;
   line-height: 1;
   white-space: nowrap;
 }
@@ -651,11 +772,11 @@ img {
 }
 
 .ui-card.release-console {
-  border-color: color-mix(in srgb, var(--dark-surface-foreground) 14%, transparent);
+  border-color: var(--release-console-border);
   background:
-    linear-gradient(180deg, color-mix(in srgb, var(--dark-surface) 96%, transparent), color-mix(in srgb, var(--dark-surface-soft) 96%, transparent)),
-    var(--dark-surface);
-  color: var(--dark-surface-foreground);
+    linear-gradient(180deg, color-mix(in srgb, var(--release-console-surface) 96%, transparent), color-mix(in srgb, var(--release-console-surface-soft) 96%, transparent)),
+    var(--release-console-surface);
+  color: var(--release-console-foreground);
 }
 
 .ui-card-header {
@@ -711,7 +832,7 @@ img {
   background: transparent;
   color: var(--muted-foreground);
   cursor: pointer;
-  font-weight: 800;
+  font-weight: 500;
   white-space: nowrap;
 }
 
@@ -827,7 +948,8 @@ img {
   }
 
   .spotlight-section,
-  .release-grid {
+  .release-grid,
+  .timeline-card-body {
     grid-template-columns: 1fr;
   }
 }
@@ -912,10 +1034,24 @@ img {
     padding-left: 20px;
   }
 
+  .release-image {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+
+  .release-image-compact {
+    padding: 0;
+  }
+
   .release-card-meta,
   .release-console-topline {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .archive-controls {
+    align-items: stretch;
+    flex-direction: column;
   }
 
   .ui-tabs-list {
