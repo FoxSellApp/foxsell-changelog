@@ -169,6 +169,24 @@ img {
   min-width: 0;
 }
 
+.foxsell-logo {
+  display: inline-grid;
+  align-items: center;
+}
+
+.foxsell-logo img {
+  grid-area: 1 / 1;
+}
+
+.foxsell-logo-dark,
+html[data-theme="dark"] .foxsell-logo-light {
+  opacity: 0;
+}
+
+html[data-theme="dark"] .foxsell-logo-dark {
+  opacity: 1;
+}
+
 .nav-links,
 .nav-actions {
   display: flex;

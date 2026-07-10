@@ -4,6 +4,21 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function () {
+                try {
+                  var storedTheme = window.localStorage.getItem("foxsell-changelog-theme");
+                  var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+                  document.documentElement.dataset.theme = storedTheme || (prefersDark ? "dark" : "light");
+                } catch (error) {
+                  document.documentElement.dataset.theme = "light";
+                }
+              })();
+            `
+          }}
+        />
         <meta name="theme-color" content="#f15d22" />
         <meta
           name="description"

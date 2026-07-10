@@ -301,15 +301,28 @@ function ReleaseBadge({ tag }) {
   )
 }
 
-function FoxSellLogo({ isDarkMode, width = 144, height = 38, priority = false }) {
+function FoxSellLogo({ width = 144, height = 38, priority = false }) {
   return (
-    <Image
-      src={isDarkMode ? darkLogoUrl : lightLogoUrl}
-      alt="FoxSell"
-      width={width}
-      height={height}
-      priority={priority}
-    />
+    <span className="foxsell-logo" role="img" aria-label="FoxSell">
+      <Image
+        className="foxsell-logo-light"
+        src={lightLogoUrl}
+        alt=""
+        width={width}
+        height={height}
+        priority={priority}
+        aria-hidden="true"
+      />
+      <Image
+        className="foxsell-logo-dark"
+        src={darkLogoUrl}
+        alt=""
+        width={width}
+        height={height}
+        priority={priority}
+        aria-hidden="true"
+      />
+    </span>
   )
 }
 
@@ -350,7 +363,7 @@ function ReleaseImage({ image, compact = false }) {
   )
 }
 
-function NavMenu({ isDarkMode }) {
+function NavMenu() {
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -361,7 +374,7 @@ function NavMenu({ isDarkMode }) {
       <SheetContent side="right">
         <SheetHeader>
           <div className="sheet-title-row">
-            <FoxSellLogo isDarkMode={isDarkMode} width={130} height={35} />
+            <FoxSellLogo width={130} height={35} />
             <SheetClose asChild>
               <Button variant="ghost" size="icon" aria-label="Close navigation menu">
                 <X size={18} strokeWidth={2.2} />
@@ -558,7 +571,7 @@ export default function Home() {
         <header className="site-header">
           <nav className="site-nav" aria-label="Primary navigation">
             <a className="nav-brand" href="#top" aria-label="Go to top of FoxSell changelog">
-              <FoxSellLogo isDarkMode={isDarkMode} width={144} height={38} priority />
+              <FoxSellLogo width={144} height={38} priority />
             </a>
 
             <div className="nav-links">
@@ -586,7 +599,7 @@ export default function Home() {
 
             <div className="mobile-menu">
               <ThemeToggle isDarkMode={isDarkMode} onToggle={toggleTheme} />
-              <NavMenu isDarkMode={isDarkMode} />
+              <NavMenu />
             </div>
           </nav>
         </header>
