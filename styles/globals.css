@@ -235,6 +235,11 @@ html[data-theme="dark"] .foxsell-logo-dark {
   background: var(--primary);
 }
 
+html[data-theme="dark"] .theme-toggle .theme-toggle-thumb {
+  transform: translateX(30px);
+  background: var(--primary);
+}
+
 .theme-toggle-icon {
   position: relative;
   z-index: 1;
@@ -251,8 +256,16 @@ html[data-theme="dark"] .foxsell-logo-dark {
   color: var(--background);
 }
 
+html[data-theme="dark"] .theme-toggle .theme-toggle-moon {
+  color: var(--background);
+}
+
 .theme-toggle-moon,
 .theme-toggle[aria-pressed="true"] .theme-toggle-sun {
+  color: var(--muted-foreground);
+}
+
+html[data-theme="dark"] .theme-toggle .theme-toggle-sun {
   color: var(--muted-foreground);
 }
 
@@ -420,7 +433,7 @@ html[data-theme="dark"] .foxsell-logo-dark {
 
 .featured-card {
   display: grid;
-  grid-template-columns: minmax(0, 0.84fr) minmax(280px, 0.72fr);
+  grid-template-columns: minmax(280px, 0.78fr) minmax(0, 1fr);
   gap: 18px;
   padding: 0;
   overflow: hidden;
@@ -434,8 +447,34 @@ html[data-theme="dark"] .foxsell-logo-dark {
 .featured-card .ui-card-content {
   display: grid;
   gap: 18px;
-  border-left: 1px solid var(--border);
   background: var(--soft-surface);
+}
+
+.featured-media {
+  display: grid;
+  min-height: 100%;
+  padding: 18px;
+  border-right: 1px solid var(--border);
+  background: var(--soft-surface);
+}
+
+.featured-media .release-image,
+.featured-media .release-image a,
+.featured-media .release-image img {
+  min-height: 100%;
+}
+
+.featured-media .release-image {
+  align-content: start;
+}
+
+.featured-media .release-image img {
+  object-fit: cover;
+}
+
+.featured-content {
+  display: grid;
+  align-content: center;
 }
 
 .featured-bullets,
@@ -960,9 +999,13 @@ html[data-theme="dark"] .foxsell-logo-dark {
     grid-template-columns: 1fr;
   }
 
+  .featured-media {
+    border-right: 0;
+    border-bottom: 1px solid var(--border);
+  }
+
   .featured-card .ui-card-content {
     border-top: 1px solid var(--border);
-    border-left: 0;
   }
 
   .spotlight-section,

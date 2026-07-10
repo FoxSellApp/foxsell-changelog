@@ -1,6 +1,6 @@
 import Head from "next/head"
 import Image from "next/image"
-import { useEffect, useMemo, useState } from "react"
+import { useMemo, useState, useSyncExternalStore } from "react"
 import {
   ArrowRight,
   CalendarDays,
@@ -240,6 +240,8 @@ const appStoreUrl = "https://apps.shopify.com/foxsell-bundles-plus?utm_source=fo
 const helpDocsUrl = "https://help.foxsell.app/en/"
 const lightLogoUrl = "/assets/foxsell-logo.svg"
 const darkLogoUrl = "/assets/foxsell-logo-white.svg"
+const themeStorageKey = "foxsell-changelog-theme"
+const themeChangeEvent = "foxsell-changelog-theme-change"
 
 const navigationLinks = [
   {
@@ -257,6 +259,39 @@ const navigationLinks = [
 ]
 
 const categoryTabs = ["All", "Launch", "Improvement", "Fixes", "Storefront"]
+
+function getSystemTheme() {
+  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
+}
+
+function getThemeSnapshot() {
+  const appliedTheme = document.documentElement.dataset.theme
+  const storedTheme = window.localStorage.getItem(themeStorageKey)
+
+  return appliedTheme || storedTheme || getSystemTheme()
+}
+
+function getServerThemeSnapshot() {
+  return "light"
+}
+
+function subscribeToThemeStore(onStoreChange) {
+  const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)")
+
+  window.addEventListener(themeChangeEvent, onStoreChange)
+  mediaQuery.addEventListener("change", onStoreChange)
+
+  return () => {
+    window.removeEventListener(themeChangeEvent, onStoreChange)
+    mediaQuery.removeEventListener("change", onStoreChange)
+  }
+}
+
+function applyTheme(theme) {
+  document.documentElement.dataset.theme = theme
+  window.localStorage.setItem(themeStorageKey, theme)
+  window.dispatchEvent(new Event(themeChangeEvent))
+}
 
 const categoryMeta = {
   Launch: { icon: PackageCheck, variant: "success" },
@@ -498,21 +533,9 @@ function TimelineView({ entries }) {
 }
 
 export default function Home() {
-  const [theme, setTheme] = useState(() => {
-    if (typeof window === "undefined") {
-      return "light"
-    }
-
-    const storedTheme = window.localStorage.getItem("foxsell-changelog-theme")
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches
-    return storedTheme || (prefersDark ? "dark" : "light")
-  })
+  const theme = useSyncExternalStore(subscribeToThemeStore, getThemeSnapshot, getServerThemeSnapshot)
   const [selectedCategory, setSelectedCategory] = useState("All")
   const [releaseView, setReleaseView] = useState("Timeline")
-
-  useEffect(() => {
-    document.documentElement.dataset.theme = theme
-  }, [theme])
 
   const isDarkMode = theme === "dark"
   const filteredEntries = useMemo(() => {
@@ -524,9 +547,8 @@ export default function Home() {
   }, [selectedCategory])
 
   const toggleTheme = () => {
-    const updatedTheme = isDarkMode ? "light" : "dark"
-    window.localStorage.setItem("foxsell-changelog-theme", updatedTheme)
-    setTheme(updatedTheme)
+    const updatedTheme = theme === "dark" ? "light" : "dark"
+    applyTheme(updatedTheme)
   }
 
   return (
@@ -680,28 +702,32 @@ export default function Home() {
           </div>
 
           <Card className="featured-card">
-            <CardHeader>
-              <div className="release-card-meta">
-                <span className="release-date">
-                  <CalendarDays size={15} strokeWidth={2.1} />
-                  {featuredStory.date}
-                </span>
-                <ReleaseBadge tag={featuredStory.tag} />
-              </div>
-              <CardTitle>{featuredStory.title}</CardTitle>
-              <CardDescription>{featuredStory.summary}</CardDescription>
-            </CardHeader>
-            <CardContent>
+            <div className="featured-media">
               <ReleaseImage image={releaseImages.tieredTemplate} compact />
-              <ul className="featured-bullets">
-                {featuredStory.bullets.map((bullet) => (
-                  <li key={bullet}>
-                    <CheckCircle2 size={17} strokeWidth={2.35} />
-                    <span>{bullet}</span>
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
+            </div>
+            <div className="featured-content">
+              <CardHeader>
+                <div className="release-card-meta">
+                  <span className="release-date">
+                    <CalendarDays size={15} strokeWidth={2.1} />
+                    {featuredStory.date}
+                  </span>
+                  <ReleaseBadge tag={featuredStory.tag} />
+                </div>
+                <CardTitle>{featuredStory.title}</CardTitle>
+                <CardDescription>{featuredStory.summary}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ul className="featured-bullets">
+                  {featuredStory.bullets.map((bullet) => (
+                    <li key={bullet}>
+                      <CheckCircle2 size={17} strokeWidth={2.35} />
+                      <span>{bullet}</span>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </div>
           </Card>
         </section>
 
