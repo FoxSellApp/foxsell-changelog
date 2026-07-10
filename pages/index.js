@@ -1,9 +1,28 @@
 import Head from "next/head"
 import Image from "next/image"
-import * as Dialog from "@radix-ui/react-dialog"
-import { Slot } from "@radix-ui/react-slot"
-import clsx from "clsx"
-import { ArrowRight, ExternalLink, Menu, Sparkles, X } from "lucide-react"
+import { useMemo, useState, useSyncExternalStore } from "react"
+import {
+  ArrowRight,
+  CalendarDays,
+  CheckCircle2,
+  ChevronRight,
+  ExternalLink,
+  Layers3,
+  Menu,
+  Moon,
+  PackageCheck,
+  Sparkles,
+  Store,
+  Sun,
+  Wrench,
+  X
+} from "lucide-react"
+
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Sheet, SheetClose, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 const featuredStory = {
   date: "July 7, 2026",
@@ -18,6 +37,45 @@ const featuredStory = {
   ]
 }
 
+const releaseImages = {
+  tieredTemplate: {
+    src: "https://raw.githubusercontent.com/knox-the-fox/foxsell-helpdoc-assets/master/supercut-bundle-builders-2026-07-08-refresh/tiered-template-31s.jpg",
+    alt: "FoxSell help docs showing the Tiered Bundle Builder setup template selection screen",
+    caption: "Tiered Bundle Builder setup from the FoxSell help docs",
+    sourceUrl: "https://help.foxsell.app/en/article/how-to-set-up-tiered-bundle-builder-on-your-store-4zvwze/"
+  },
+  guidedStorefront: {
+    src: "https://raw.githubusercontent.com/knox-the-fox/foxsell-helpdoc-assets/master/supercut-bundle-builders-2026-07-08-refresh/guided-storefront-342s.jpg",
+    alt: "FoxSell help docs showing a Guided Steps Bundle Builder storefront preview",
+    caption: "Guided Steps storefront preview from the FoxSell help docs",
+    sourceUrl: "https://help.foxsell.app/en/article/how-to-set-up-guided-steps-bundle-builder-on-your-store-1mppgmx/"
+  },
+  fixedInfiniteVariantSetup: {
+    src: "https://raw.githubusercontent.com/knox-the-fox/foxsell-helpdoc-assets/master/03-products-addons-pricing.jpg",
+    alt: "FoxSell help docs showing products, add-ons, and pricing setup for a fixed bundle with infinite variants",
+    caption: "Fixed Bundle with Infinite Variants setup from the FoxSell help docs",
+    sourceUrl: "https://help.foxsell.app/en/article/how-to-set-up-fixed-bundle-with-infinite-variants-on-your-store-9eaxy8/"
+  },
+  fixedInfiniteVariantStorefront: {
+    src: "https://raw.githubusercontent.com/knox-the-fox/foxsell-helpdoc-assets/master/08-storefront-builder.jpg",
+    alt: "FoxSell help docs showing a storefront builder preview for Fixed Bundle with Infinite Variants",
+    caption: "Storefront builder preview from the FoxSell help docs",
+    sourceUrl: "https://help.foxsell.app/en/article/how-to-set-up-fixed-bundle-with-infinite-variants-on-your-store-9eaxy8/"
+  },
+  themeSwatches: {
+    src: "https://raw.githubusercontent.com/knox-the-fox/foxsell-helpdoc-assets/master/10-theme-settings-swatches.jpg",
+    alt: "FoxSell help docs showing theme settings for color swatches",
+    caption: "Theme swatch settings from the FoxSell help docs",
+    sourceUrl: "https://help.foxsell.app/en/article/how-to-set-up-fixed-bundle-with-infinite-variants-on-your-store-9eaxy8/"
+  },
+  sectionSetup: {
+    src: "https://raw.githubusercontent.com/knox-the-fox/foxsell-helpdoc-assets/master/supercut-bundle-builders-2026-07-08-refresh/tiered-section_settings-430s.jpg",
+    alt: "FoxSell help docs showing section settings for a Tiered Bundle Builder setup",
+    caption: "Theme section settings from the FoxSell help docs",
+    sourceUrl: "https://help.foxsell.app/en/article/how-to-set-up-tiered-bundle-builder-on-your-store-4zvwze/"
+  }
+}
+
 const changelogEntries = [
   {
     date: "July 7, 2026",
@@ -29,7 +87,8 @@ const changelogEntries = [
       "Tiered Bundle Builder, Guided Steps Bundle Builder, and Fixed Bundle with Infinite Variants setup pages now include direct video tutorial links near the bundle details",
       "Dashboard help resources now route Dashboard V2 merchants to the current FoxSell tutorial collection",
       "Template setup is more stable when saving edits, detecting theme support, and configuring Guided Steps automatic add-ons"
-    ]
+    ],
+    image: releaseImages.tieredTemplate
   },
   {
     date: "July 6, 2026",
@@ -41,7 +100,8 @@ const changelogEntries = [
       "Fixed Bundle with Infinite Variants is now available in the mix-and-match template gallery",
       "Merchants can choose fixed bundle pricing or a percentage discount off the selected products",
       "Add-ons and free gifts can be configured as always included or optional choices on the product page"
-    ]
+    ],
+    image: releaseImages.fixedInfiniteVariantStorefront
   },
   {
     date: "July 6, 2026",
@@ -53,7 +113,8 @@ const changelogEntries = [
       "Template installation guidance now separates section-based setup from product-block setup for compatible Shopify themes",
       "Bundle creation redirects now wait for the save state to clear before opening the new bundle",
       "Delete dialogs now close more reliably before returning merchants to the bundle list"
-    ]
+    ],
+    image: releaseImages.sectionSetup
   },
   {
     date: "June 12, 2026",
@@ -77,7 +138,8 @@ const changelogEntries = [
       "Very high guided-step quantity caps now display as infinity instead of confusing raw values",
       "Category and tier guidance is easier to read while configuring or editing bundles",
       "POS product selection screens now make it clearer when more items can still be added or when a limit has been reached"
-    ]
+    ],
+    image: releaseImages.guidedStorefront
   },
   {
     date: "June 8, 2026",
@@ -89,7 +151,8 @@ const changelogEntries = [
       "Bundle details are clearer and easier to review inside the Shopify Admin product configuration block",
       "Merchants get better bundle context during editing without needing to switch between screens",
       "Invalid bundle configurations can no longer be purchased, reducing broken bundle checkouts"
-    ]
+    ],
+    image: releaseImages.fixedInfiniteVariantSetup
   },
   {
     date: "June 2, 2026",
@@ -113,7 +176,8 @@ const changelogEntries = [
       "Structured setup flows for ready-to-use bundle templates",
       "A clearer path to preview, configure, and install template-based experiences",
       "Less friction when launching bundle layouts that already work well in real stores"
-    ]
+    ],
+    image: releaseImages.tieredTemplate
   },
   {
     date: "May 16, 2026",
@@ -125,7 +189,8 @@ const changelogEntries = [
       "Preview actions now feel more dependable and easier to follow",
       "Demo store links make templates easier to evaluate in a realistic storefront context",
       "Helpful guidance appears more naturally during template setup"
-    ]
+    ],
+    image: releaseImages.guidedStorefront
   },
   {
     date: "May 12, 2026",
@@ -137,7 +202,8 @@ const changelogEntries = [
       "Color swatches are now supported for qualifying option selections",
       "Bundle quantity and pricing details are presented more clearly in the summary experience",
       "Fixed-price bundle summaries stay cleaner by hiding item-level prices when they are not useful"
-    ]
+    ],
+    image: releaseImages.themeSwatches
   },
   {
     date: "May 12, 2026",
@@ -149,7 +215,8 @@ const changelogEntries = [
       "Add-ons now stay better aligned with the option choices shoppers actually make",
       "Invalid or unavailable add-on states are cleared more reliably",
       "Bundle interactions behave more predictably when quantities or options change"
-    ]
+    ],
+    image: releaseImages.fixedInfiniteVariantSetup
   },
   {
     date: "May 5, 2026",
@@ -161,7 +228,8 @@ const changelogEntries = [
       "Multi-variant bundles now handle empty variant states more gracefully",
       "Dynamic add-on bundle pricing edits are more dependable in supported configurations",
       "Per-option add-on setups now duplicate products more reliably in advanced bundle workflows"
-    ]
+    ],
+    image: releaseImages.fixedInfiniteVariantSetup
   }
 ]
 
@@ -170,6 +238,10 @@ const socialPreviewImageUrl = `${changelogUrl}/social-preview.png`
 const websiteUrl = "https://www.foxsell.com/?utm_source=foxsell_changelog&utm_medium=navbar&utm_campaign=public_changelog"
 const appStoreUrl = "https://apps.shopify.com/foxsell-bundles-plus?utm_source=foxsell_changelog&utm_medium=cta&utm_campaign=public_changelog"
 const helpDocsUrl = "https://help.foxsell.app/en/"
+const lightLogoUrl = "/assets/foxsell-logo.svg"
+const darkLogoUrl = "/assets/foxsell-logo-white.svg"
+const themeStorageKey = "foxsell-changelog-theme"
+const themeChangeEvent = "foxsell-changelog-theme-change"
 
 const navigationLinks = [
   {
@@ -186,121 +258,299 @@ const navigationLinks = [
   }
 ]
 
-function LinkButton({ href, children, variant = "secondary", className, external = false }) {
-  const Component = href ? "a" : "button"
+const categoryTabs = ["All", "Launch", "Improvement", "Fixes", "Storefront"]
+
+function getSystemTheme() {
+  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
+}
+
+function getThemeSnapshot() {
+  const appliedTheme = document.documentElement.dataset.theme
+  const storedTheme = window.localStorage.getItem(themeStorageKey)
+
+  return appliedTheme || storedTheme || getSystemTheme()
+}
+
+function getServerThemeSnapshot() {
+  return "light"
+}
+
+function subscribeToThemeStore(onStoreChange) {
+  const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)")
+
+  window.addEventListener(themeChangeEvent, onStoreChange)
+  mediaQuery.addEventListener("change", onStoreChange)
+
+  return () => {
+    window.removeEventListener(themeChangeEvent, onStoreChange)
+    mediaQuery.removeEventListener("change", onStoreChange)
+  }
+}
+
+function applyTheme(theme) {
+  document.documentElement.dataset.theme = theme
+  window.localStorage.setItem(themeStorageKey, theme)
+  window.dispatchEvent(new Event(themeChangeEvent))
+}
+
+const categoryMeta = {
+  Launch: { icon: PackageCheck, variant: "success" },
+  Improvement: { icon: Sparkles, variant: "default" },
+  Fixes: { icon: Wrench, variant: "secondary" },
+  Storefront: { icon: Store, variant: "outline" }
+}
+
+const updateStats = [
+  { label: "Recent releases", value: changelogEntries.length },
+  { label: "Launches", value: changelogEntries.filter((entry) => entry.tag === "Launch").length },
+  { label: "Quality updates", value: changelogEntries.filter((entry) => entry.tag === "Fixes" || entry.tag === "Improvement").length }
+]
+
+const spotlightCards = [
+  {
+    icon: Layers3,
+    label: "Bundle templates",
+    copy: "Template setup, guided steps, fixed bundles, and merchant-facing launch flows."
+  },
+  {
+    icon: Store,
+    label: "Storefront polish",
+    copy: "Shopper option states, bundle summaries, and validation improvements."
+  },
+  {
+    icon: CheckCircle2,
+    label: "Operational fixes",
+    copy: "Save reliability, cleanup paths, POS editing, and admin review clarity."
+  }
+]
+
+function ReleaseBadge({ tag }) {
+  const meta = categoryMeta[tag] ?? categoryMeta.Improvement
+  const Icon = meta.icon
 
   return (
-    <Component
-      className={clsx("button", `button-${variant}`, className)}
-      href={href}
-      target={external ? "_blank" : undefined}
-      rel={external ? "noreferrer" : undefined}
-      type={href ? undefined : "button"}
+    <Badge variant={meta.variant}>
+      <Icon size={14} strokeWidth={2.25} />
+      {tag}
+    </Badge>
+  )
+}
+
+function FoxSellLogo({ width = 144, height = 38, priority = false }) {
+  return (
+    <span className="foxsell-logo" role="img" aria-label="FoxSell">
+      <Image
+        className="foxsell-logo-light"
+        src={lightLogoUrl}
+        alt=""
+        width={width}
+        height={height}
+        priority={priority}
+        aria-hidden="true"
+      />
+      <Image
+        className="foxsell-logo-dark"
+        src={darkLogoUrl}
+        alt=""
+        width={width}
+        height={height}
+        priority={priority}
+        aria-hidden="true"
+      />
+    </span>
+  )
+}
+
+function ThemeToggle({ isDarkMode, onToggle }) {
+  const nextTheme = isDarkMode ? "light" : "dark"
+
+  return (
+    <button
+      type="button"
+      className="theme-toggle"
+      aria-label={`Switch to ${nextTheme} mode`}
+      aria-pressed={isDarkMode}
+      onClick={onToggle}
     >
-      {children}
-    </Component>
+      <span className="theme-toggle-thumb" aria-hidden="true" />
+      <span className="theme-toggle-icon theme-toggle-sun">
+        <Sun size={16} strokeWidth={2.2} />
+      </span>
+      <span className="theme-toggle-icon theme-toggle-moon">
+        <Moon size={16} strokeWidth={2.2} />
+      </span>
+    </button>
   )
 }
 
-function Surface({ asChild = false, className, children }) {
-  const Component = asChild ? Slot : "div"
+function ReleaseImage({ image, compact = false }) {
+  if (!image) {
+    return null
+  }
 
-  return <Component className={clsx("surface-card", className)}>{children}</Component>
-}
-
-function TimelineEntry({ entry, index }) {
   return (
-    <li className="timeline-item">
-      <div className="timeline-track" aria-hidden="true">
-        <span className="timeline-node" />
-        {index !== changelogEntries.length - 1 ? <span className="timeline-stem" /> : null}
-      </div>
-
-      <Surface asChild>
-        <article className="entry-card">
-          <div className="entry-header">
-            <div>
-              <div className="entry-date">{entry.date}</div>
-              <h3>{entry.title}</h3>
-            </div>
-            <span className="entry-tag">{entry.tag}</span>
-          </div>
-          <p>{entry.summary}</p>
-          <ul>
-            {entry.bullets.map((bullet) => (
-              <li key={bullet}>{bullet}</li>
-            ))}
-          </ul>
-        </article>
-      </Surface>
-    </li>
+    <figure className={compact ? "release-image release-image-compact" : "release-image"}>
+      <a href={image.sourceUrl} target="_blank" rel="noreferrer" aria-label={`Open help doc source for ${image.caption}`}>
+        <Image src={image.src} alt={image.alt} width={640} height={360} sizes="(max-width: 700px) 100vw, 420px" />
+      </a>
+      <figcaption>{image.caption}</figcaption>
+    </figure>
   )
 }
 
-function MobileNavigation() {
+function NavMenu() {
   return (
-    <Dialog.Root>
-      <Dialog.Trigger asChild>
-        <button className="nav-menu-trigger" type="button" aria-label="Open navigation menu">
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button variant="outline" size="icon" aria-label="Open navigation menu">
           <Menu size={18} strokeWidth={2.2} />
-          <span>Menu</span>
-        </button>
-      </Dialog.Trigger>
-
-      <Dialog.Portal>
-        <Dialog.Overlay className="nav-drawer-overlay" />
-        <Dialog.Content className="nav-drawer-content">
-          <div className="nav-drawer-shell">
-            <div className="nav-drawer-header">
-              <div className="nav-drawer-brand-lockup">
-                <span className="nav-drawer-caption">FoxSell changelog</span>
-                <Image src="/assets/foxsell-logo.svg" alt="FoxSell" width={126} height={34} />
-              </div>
-              <Dialog.Close asChild>
-                <button className="nav-drawer-close" type="button" aria-label="Close navigation menu">
-                  <X size={18} strokeWidth={2.2} />
-                </button>
-              </Dialog.Close>
-            </div>
-
-            <div className="nav-drawer-body">
-              <p className="nav-drawer-copy">Product updates, release notes, and launch highlights in one compact stream.</p>
-
-              <div className="nav-drawer-links" role="list">
-                {navigationLinks.map((navigationLink) => (
-                  <Dialog.Close asChild key={navigationLink.label}>
-                    <a className="nav-drawer-link-card" href={navigationLink.href} target="_blank" rel="noreferrer">
-                      <div>
-                        <span className="nav-drawer-link-label">{navigationLink.label}</span>
-                        <span className="nav-drawer-link-description">{navigationLink.description}</span>
-                      </div>
-                      <ExternalLink size={16} strokeWidth={2.1} />
-                    </a>
-                  </Dialog.Close>
-                ))}
-              </div>
-
-              <div className="nav-drawer-actions">
-                <Dialog.Close asChild>
-                  <a className="button button-primary" href="#featured-release">
-                    Read featured release
-                  </a>
-                </Dialog.Close>
-                <Dialog.Close asChild>
-                  <a className="button button-secondary" href="#latest-updates">
-                    Latest updates
-                  </a>
-                </Dialog.Close>
-              </div>
-            </div>
+        </Button>
+      </SheetTrigger>
+      <SheetContent side="right">
+        <SheetHeader>
+          <div className="sheet-title-row">
+            <FoxSellLogo width={130} height={35} />
+            <SheetClose asChild>
+              <Button variant="ghost" size="icon" aria-label="Close navigation menu">
+                <X size={18} strokeWidth={2.2} />
+              </Button>
+            </SheetClose>
           </div>
-        </Dialog.Content>
-      </Dialog.Portal>
-    </Dialog.Root>
+          <SheetTitle>FoxSell changelog</SheetTitle>
+          <SheetDescription>Product updates, launch notes, and merchant-facing improvements.</SheetDescription>
+        </SheetHeader>
+
+        <div className="sheet-link-list">
+          {navigationLinks.map((navigationLink) => (
+            <SheetClose asChild key={navigationLink.label}>
+              <a className="sheet-link" href={navigationLink.href} target="_blank" rel="noreferrer">
+                <span>
+                  <span className="sheet-link-label">{navigationLink.label}</span>
+                  <small>{navigationLink.description}</small>
+                </span>
+                <ExternalLink size={16} strokeWidth={2.1} />
+              </a>
+            </SheetClose>
+          ))}
+        </div>
+
+        <div className="sheet-actions">
+          <SheetClose asChild>
+            <Button asChild>
+              <a href="#latest-updates">Browse updates</a>
+            </Button>
+          </SheetClose>
+          <SheetClose asChild>
+            <Button asChild variant="secondary">
+              <a href={appStoreUrl} target="_blank" rel="noreferrer">
+                Install app
+              </a>
+            </Button>
+          </SheetClose>
+        </div>
+      </SheetContent>
+    </Sheet>
+  )
+}
+
+function ReleaseCard({ entry }) {
+  return (
+    <Card className="release-card">
+      <CardHeader>
+        <div className="release-card-meta">
+          <span className="release-date">
+            <CalendarDays size={15} strokeWidth={2.1} />
+            {entry.date}
+          </span>
+          <ReleaseBadge tag={entry.tag} />
+        </div>
+        <CardTitle>{entry.title}</CardTitle>
+        <CardDescription>{entry.summary}</CardDescription>
+      </CardHeader>
+      <ReleaseImage image={entry.image} />
+      <CardContent>
+        <ul className="release-bullets">
+          {entry.bullets.map((bullet) => (
+            <li key={bullet}>
+              <CheckCircle2 size={16} strokeWidth={2.35} />
+              <span>{bullet}</span>
+            </li>
+          ))}
+        </ul>
+      </CardContent>
+    </Card>
+  )
+}
+
+function ReleaseGrid({ entries }) {
+  return (
+    <div className="release-grid">
+      {entries.map((entry) => (
+        <ReleaseCard key={`${entry.date}-${entry.title}`} entry={entry} />
+      ))}
+    </div>
+  )
+}
+
+function TimelineView({ entries }) {
+  return (
+    <div className="release-timeline">
+      {entries.map((entry) => (
+        <article className="timeline-entry" key={`${entry.date}-${entry.title}`}>
+          <div className="timeline-rail" aria-hidden="true">
+            <span />
+          </div>
+          <Card className="timeline-card">
+            <CardHeader>
+              <div className="release-card-meta">
+                <span className="release-date">
+                  <CalendarDays size={15} strokeWidth={2.1} />
+                  {entry.date}
+                </span>
+                <ReleaseBadge tag={entry.tag} />
+              </div>
+              <CardTitle>{entry.title}</CardTitle>
+              <CardDescription>{entry.summary}</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="timeline-card-body">
+                <ReleaseImage image={entry.image} compact />
+                <ul className="release-bullets">
+                  {entry.bullets.map((bullet) => (
+                    <li key={bullet}>
+                      <CheckCircle2 size={16} strokeWidth={2.35} />
+                      <span>{bullet}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </CardContent>
+          </Card>
+        </article>
+      ))}
+    </div>
   )
 }
 
 export default function Home() {
+  const theme = useSyncExternalStore(subscribeToThemeStore, getThemeSnapshot, getServerThemeSnapshot)
+  const [selectedCategory, setSelectedCategory] = useState("All")
+  const [releaseView, setReleaseView] = useState("Timeline")
+
+  const isDarkMode = theme === "dark"
+  const filteredEntries = useMemo(() => {
+    if (selectedCategory === "All") {
+      return changelogEntries
+    }
+
+    return changelogEntries.filter((entry) => entry.tag === selectedCategory)
+  }, [selectedCategory])
+
+  const toggleTheme = () => {
+    const updatedTheme = theme === "dark" ? "light" : "dark"
+    applyTheme(updatedTheme)
+  }
+
   return (
     <>
       <Head>
@@ -309,6 +559,7 @@ export default function Home() {
           name="description"
           content="Merchant-facing product updates from FoxSell, redesigned into a polished public changelog experience."
         />
+        <meta name="color-scheme" content="light dark" />
         <meta property="og:title" content="FoxSell Changelog" />
         <meta
           property="og:description"
@@ -338,118 +589,174 @@ export default function Home() {
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
       </Head>
 
-      <main className="page-shell">
+      <main className="app-shell">
         <header className="site-header">
           <nav className="site-nav" aria-label="Primary navigation">
             <a className="nav-brand" href="#top" aria-label="Go to top of FoxSell changelog">
-              <Image src="/assets/foxsell-logo.svg" alt="FoxSell" width={144} height={38} priority />
+              <FoxSellLogo width={144} height={38} priority />
             </a>
 
-            <div className="nav-desktop-links">
+            <div className="nav-links">
               {navigationLinks.map((navigationLink) => (
-                <a key={navigationLink.label} className="nav-link" href={navigationLink.href} target="_blank" rel="noreferrer">
-                  {navigationLink.label}
-                </a>
+                <Button asChild key={navigationLink.label} variant="ghost" size="sm">
+                  <a href={navigationLink.href} target="_blank" rel="noreferrer">
+                    {navigationLink.label}
+                  </a>
+                </Button>
               ))}
             </div>
 
-            <div className="nav-desktop-actions">
-              <LinkButton href="#latest-updates" variant="ghost" className="nav-inline-action">
-                Latest updates
-              </LinkButton>
-              <LinkButton href={appStoreUrl} variant="primary" className="nav-inline-action" external>
-                Install app
-              </LinkButton>
+            <div className="nav-actions">
+              <ThemeToggle isDarkMode={isDarkMode} onToggle={toggleTheme} />
+              <Button asChild variant="secondary" size="sm">
+                <a href="#latest-updates">Latest updates</a>
+              </Button>
+              <Button asChild size="sm">
+                <a href={appStoreUrl} target="_blank" rel="noreferrer">
+                  Install app
+                  <ExternalLink size={14} strokeWidth={2.2} />
+                </a>
+              </Button>
             </div>
 
-            <div className="nav-mobile-actions">
-              <LinkButton href={appStoreUrl} variant="primary" className="nav-mobile-cta" external>
-                Install
-              </LinkButton>
-              <MobileNavigation />
+            <div className="mobile-menu">
+              <ThemeToggle isDarkMode={isDarkMode} onToggle={toggleTheme} />
+              <NavMenu />
             </div>
           </nav>
         </header>
 
         <section className="hero-section" id="top">
-          <div className="hero-background-orb hero-background-orb-left" />
-          <div className="hero-background-orb hero-background-orb-right" />
-
-          <div className="hero-topbar">
-            <span className="brand-caption">Product changelog</span>
-            <Surface className="hero-announcement">
-              <Sparkles size={16} strokeWidth={2.1} />
-              <span>Shipping clearer bundle experiences for merchants every week</span>
-            </Surface>
-          </div>
-
-          <div className="hero-grid hero-grid-single">
-            <div className="hero-copy-column">
-              <span className="eyebrow">What&apos;s new</span>
-              <h1>Product updates that help merchants launch better bundles, faster</h1>
-              <p className="hero-copy">
-                Follow the latest FoxSell launches, refinements, and fixes in one polished stream built for merchants who want clarity, not clutter.
-              </p>
-
-              <div className="hero-actions">
-                <LinkButton href="#featured-release" variant="primary">
+          <div className="hero-copy">
+            <Badge variant="outline">
+              <Sparkles size={14} strokeWidth={2.25} />
+              Product changelog
+            </Badge>
+            <h1>Every FoxSell release, organized for merchants who are building momentum.</h1>
+            <p>
+              Track launches, storefront improvements, and reliability fixes in a shadcn-powered release desk that keeps the FoxSell brand familiar while making the changelog easier to scan.
+            </p>
+            <div className="hero-actions">
+              <Button asChild size="lg">
+                <a href="#featured-release">
                   Read featured release
-                  <ArrowRight size={18} strokeWidth={2.2} />
-                </LinkButton>
-                <LinkButton href="#latest-updates" variant="secondary">
-                  Latest updates
-                </LinkButton>
-              </div>
+                  <ArrowRight size={18} strokeWidth={2.25} />
+                </a>
+              </Button>
+              <Button asChild variant="secondary" size="lg">
+                <a href="#latest-updates">Open archive</a>
+              </Button>
             </div>
           </div>
+
+          <Card className="release-console">
+            <CardHeader>
+              <div className="release-console-topline">
+                <span>Release desk</span>
+                <Badge variant="success">Live</Badge>
+              </div>
+              <CardTitle>{featuredStory.title}</CardTitle>
+              <CardDescription>{featuredStory.summary}</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="console-metrics">
+                {updateStats.map((stat) => (
+                  <div className="console-metric" key={stat.label}>
+                    <strong>{stat.value}</strong>
+                    <span>{stat.label}</span>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+            <CardFooter>
+              <a href="#latest-updates" className="console-link">
+                Browse the full release archive
+                <ChevronRight size={16} strokeWidth={2.25} />
+              </a>
+            </CardFooter>
+          </Card>
+        </section>
+
+        <section className="spotlight-section" aria-label="Release focus areas">
+          {spotlightCards.map((card) => {
+            const Icon = card.icon
+
+            return (
+              <Card className="spotlight-card" key={card.label}>
+                <CardHeader>
+                  <span className="spotlight-icon">
+                    <Icon size={20} strokeWidth={2.25} />
+                  </span>
+                  <CardTitle>{card.label}</CardTitle>
+                  <CardDescription>{card.copy}</CardDescription>
+                </CardHeader>
+              </Card>
+            )
+          })}
         </section>
 
         <section className="featured-section" id="featured-release">
-          <div className="section-heading-row section-heading-row-full">
-            <div>
-              <span className="section-kicker">Featured release</span>
-              <h2>{featuredStory.title}</h2>
-            </div>
+          <div className="section-heading">
+            <Badge variant="outline">Featured release</Badge>
+            <h2>Latest improvements, pulled forward for quick review.</h2>
           </div>
 
-          <Surface asChild>
-            <article className="featured-card">
-              <div className="entry-header">
-                <div>
-                  <div className="entry-date">{featuredStory.date}</div>
+          <Card className="featured-card">
+            <div className="featured-media">
+              <ReleaseImage image={releaseImages.tieredTemplate} compact />
+            </div>
+            <div className="featured-content">
+              <CardHeader>
+                <div className="release-card-meta">
+                  <span className="release-date">
+                    <CalendarDays size={15} strokeWidth={2.1} />
+                    {featuredStory.date}
+                  </span>
+                  <ReleaseBadge tag={featuredStory.tag} />
                 </div>
-                <span className="entry-tag">{featuredStory.tag}</span>
-              </div>
-              <p>{featuredStory.summary}</p>
-              <ul>
-                {featuredStory.bullets.map((bullet) => (
-                  <li key={bullet}>{bullet}</li>
-                ))}
-              </ul>
-            </article>
-          </Surface>
+                <CardTitle>{featuredStory.title}</CardTitle>
+                <CardDescription>{featuredStory.summary}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ul className="featured-bullets">
+                  {featuredStory.bullets.map((bullet) => (
+                    <li key={bullet}>
+                      <CheckCircle2 size={17} strokeWidth={2.35} />
+                      <span>{bullet}</span>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </div>
+          </Card>
         </section>
 
-        <section className="timeline-section" id="latest-updates">
-          <div className="section-heading-row section-heading-row-full section-heading-row-archive">
-            <div>
-              <span className="section-kicker">Release archive</span>
-              <h2>A changelog designed for browsing, not skimming past</h2>
-            </div>
+        <section className="archive-section" id="latest-updates">
+          <div className="section-heading archive-heading">
+            <Badge variant="outline">Release archive</Badge>
+            <h2>Filter updates by the work your team cares about.</h2>
           </div>
 
-          <Surface className="timeline-shell">
-            <div className="timeline-shell-header">
-              <span className="timeline-shell-kicker">Latest updates</span>
-              <p>Browse recent launches, storefront polish, and reliability improvements in one continuous release stream.</p>
-            </div>
+          <div className="archive-controls">
+            <Tabs value={selectedCategory} onValueChange={setSelectedCategory} className="category-tabs">
+              <TabsList aria-label="Filter changelog entries">
+                {categoryTabs.map((category) => (
+                  <TabsTrigger value={category} key={category}>
+                    {category}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+            </Tabs>
 
-            <ol className="timeline-list">
-              {changelogEntries.map((entry, index) => (
-                <TimelineEntry key={`${entry.date}-${entry.title}`} entry={entry} index={index} />
-              ))}
-            </ol>
-          </Surface>
+            <Tabs value={releaseView} onValueChange={setReleaseView} className="view-tabs">
+              <TabsList aria-label="Choose changelog presentation">
+                <TabsTrigger value="Cards">Cards</TabsTrigger>
+                <TabsTrigger value="Timeline">Timeline</TabsTrigger>
+              </TabsList>
+            </Tabs>
+          </div>
+
+          {releaseView === "Timeline" ? <TimelineView entries={filteredEntries} /> : <ReleaseGrid entries={filteredEntries} />}
         </section>
       </main>
     </>
