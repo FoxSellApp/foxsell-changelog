@@ -1,9 +1,25 @@
 import Head from "next/head"
 import Image from "next/image"
-import * as Dialog from "@radix-ui/react-dialog"
-import { Slot } from "@radix-ui/react-slot"
-import clsx from "clsx"
-import { ArrowRight, ExternalLink, Menu, Sparkles, X } from "lucide-react"
+import {
+  ArrowRight,
+  CalendarDays,
+  CheckCircle2,
+  ChevronRight,
+  ExternalLink,
+  Layers3,
+  Menu,
+  PackageCheck,
+  Sparkles,
+  Store,
+  Wrench,
+  X
+} from "lucide-react"
+
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Sheet, SheetClose, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 const featuredStory = {
   date: "July 7, 2026",
@@ -186,117 +202,143 @@ const navigationLinks = [
   }
 ]
 
-function LinkButton({ href, children, variant = "secondary", className, external = false }) {
-  const Component = href ? "a" : "button"
+const categoryTabs = ["All", "Launch", "Improvement", "Fixes", "Storefront"]
+
+const categoryMeta = {
+  Launch: { icon: PackageCheck, variant: "success" },
+  Improvement: { icon: Sparkles, variant: "default" },
+  Fixes: { icon: Wrench, variant: "secondary" },
+  Storefront: { icon: Store, variant: "outline" }
+}
+
+const updateStats = [
+  { label: "Recent releases", value: changelogEntries.length },
+  { label: "Launches", value: changelogEntries.filter((entry) => entry.tag === "Launch").length },
+  { label: "Quality updates", value: changelogEntries.filter((entry) => entry.tag === "Fixes" || entry.tag === "Improvement").length }
+]
+
+const spotlightCards = [
+  {
+    icon: Layers3,
+    label: "Bundle templates",
+    copy: "Template setup, guided steps, fixed bundles, and merchant-facing launch flows."
+  },
+  {
+    icon: Store,
+    label: "Storefront polish",
+    copy: "Shopper option states, bundle summaries, and validation improvements."
+  },
+  {
+    icon: CheckCircle2,
+    label: "Operational fixes",
+    copy: "Save reliability, cleanup paths, POS editing, and admin review clarity."
+  }
+]
+
+function ReleaseBadge({ tag }) {
+  const meta = categoryMeta[tag] ?? categoryMeta.Improvement
+  const Icon = meta.icon
 
   return (
-    <Component
-      className={clsx("button", `button-${variant}`, className)}
-      href={href}
-      target={external ? "_blank" : undefined}
-      rel={external ? "noreferrer" : undefined}
-      type={href ? undefined : "button"}
-    >
-      {children}
-    </Component>
+    <Badge variant={meta.variant}>
+      <Icon size={14} strokeWidth={2.25} />
+      {tag}
+    </Badge>
   )
 }
 
-function Surface({ asChild = false, className, children }) {
-  const Component = asChild ? Slot : "div"
-
-  return <Component className={clsx("surface-card", className)}>{children}</Component>
-}
-
-function TimelineEntry({ entry, index }) {
+function NavMenu() {
   return (
-    <li className="timeline-item">
-      <div className="timeline-track" aria-hidden="true">
-        <span className="timeline-node" />
-        {index !== changelogEntries.length - 1 ? <span className="timeline-stem" /> : null}
-      </div>
-
-      <Surface asChild>
-        <article className="entry-card">
-          <div className="entry-header">
-            <div>
-              <div className="entry-date">{entry.date}</div>
-              <h3>{entry.title}</h3>
-            </div>
-            <span className="entry-tag">{entry.tag}</span>
-          </div>
-          <p>{entry.summary}</p>
-          <ul>
-            {entry.bullets.map((bullet) => (
-              <li key={bullet}>{bullet}</li>
-            ))}
-          </ul>
-        </article>
-      </Surface>
-    </li>
-  )
-}
-
-function MobileNavigation() {
-  return (
-    <Dialog.Root>
-      <Dialog.Trigger asChild>
-        <button className="nav-menu-trigger" type="button" aria-label="Open navigation menu">
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button variant="outline" size="icon" aria-label="Open navigation menu">
           <Menu size={18} strokeWidth={2.2} />
-          <span>Menu</span>
-        </button>
-      </Dialog.Trigger>
-
-      <Dialog.Portal>
-        <Dialog.Overlay className="nav-drawer-overlay" />
-        <Dialog.Content className="nav-drawer-content">
-          <div className="nav-drawer-shell">
-            <div className="nav-drawer-header">
-              <div className="nav-drawer-brand-lockup">
-                <span className="nav-drawer-caption">FoxSell changelog</span>
-                <Image src="/assets/foxsell-logo.svg" alt="FoxSell" width={126} height={34} />
-              </div>
-              <Dialog.Close asChild>
-                <button className="nav-drawer-close" type="button" aria-label="Close navigation menu">
-                  <X size={18} strokeWidth={2.2} />
-                </button>
-              </Dialog.Close>
-            </div>
-
-            <div className="nav-drawer-body">
-              <p className="nav-drawer-copy">Product updates, release notes, and launch highlights in one compact stream.</p>
-
-              <div className="nav-drawer-links" role="list">
-                {navigationLinks.map((navigationLink) => (
-                  <Dialog.Close asChild key={navigationLink.label}>
-                    <a className="nav-drawer-link-card" href={navigationLink.href} target="_blank" rel="noreferrer">
-                      <div>
-                        <span className="nav-drawer-link-label">{navigationLink.label}</span>
-                        <span className="nav-drawer-link-description">{navigationLink.description}</span>
-                      </div>
-                      <ExternalLink size={16} strokeWidth={2.1} />
-                    </a>
-                  </Dialog.Close>
-                ))}
-              </div>
-
-              <div className="nav-drawer-actions">
-                <Dialog.Close asChild>
-                  <a className="button button-primary" href="#featured-release">
-                    Read featured release
-                  </a>
-                </Dialog.Close>
-                <Dialog.Close asChild>
-                  <a className="button button-secondary" href="#latest-updates">
-                    Latest updates
-                  </a>
-                </Dialog.Close>
-              </div>
-            </div>
+        </Button>
+      </SheetTrigger>
+      <SheetContent side="right">
+        <SheetHeader>
+          <div className="sheet-title-row">
+            <Image src="/assets/foxsell-logo.svg" alt="FoxSell" width={130} height={35} />
+            <SheetClose asChild>
+              <Button variant="ghost" size="icon" aria-label="Close navigation menu">
+                <X size={18} strokeWidth={2.2} />
+              </Button>
+            </SheetClose>
           </div>
-        </Dialog.Content>
-      </Dialog.Portal>
-    </Dialog.Root>
+          <SheetTitle>FoxSell changelog</SheetTitle>
+          <SheetDescription>Product updates, launch notes, and merchant-facing improvements.</SheetDescription>
+        </SheetHeader>
+
+        <div className="sheet-link-list">
+          {navigationLinks.map((navigationLink) => (
+            <SheetClose asChild key={navigationLink.label}>
+              <a className="sheet-link" href={navigationLink.href} target="_blank" rel="noreferrer">
+                <span>
+                  <strong>{navigationLink.label}</strong>
+                  <small>{navigationLink.description}</small>
+                </span>
+                <ExternalLink size={16} strokeWidth={2.1} />
+              </a>
+            </SheetClose>
+          ))}
+        </div>
+
+        <div className="sheet-actions">
+          <SheetClose asChild>
+            <Button asChild>
+              <a href="#latest-updates">Browse updates</a>
+            </Button>
+          </SheetClose>
+          <SheetClose asChild>
+            <Button asChild variant="secondary">
+              <a href={appStoreUrl} target="_blank" rel="noreferrer">
+                Install app
+              </a>
+            </Button>
+          </SheetClose>
+        </div>
+      </SheetContent>
+    </Sheet>
+  )
+}
+
+function ReleaseCard({ entry }) {
+  return (
+    <Card className="release-card">
+      <CardHeader>
+        <div className="release-card-meta">
+          <span className="release-date">
+            <CalendarDays size={15} strokeWidth={2.1} />
+            {entry.date}
+          </span>
+          <ReleaseBadge tag={entry.tag} />
+        </div>
+        <CardTitle>{entry.title}</CardTitle>
+        <CardDescription>{entry.summary}</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <ul className="release-bullets">
+          {entry.bullets.map((bullet) => (
+            <li key={bullet}>
+              <CheckCircle2 size={16} strokeWidth={2.35} />
+              <span>{bullet}</span>
+            </li>
+          ))}
+        </ul>
+      </CardContent>
+    </Card>
+  )
+}
+
+function ReleasePane({ value, entries }) {
+  return (
+    <TabsContent value={value}>
+      <div className="release-grid">
+        {entries.map((entry) => (
+          <ReleaseCard key={`${value}-${entry.date}-${entry.title}`} entry={entry} />
+        ))}
+      </div>
+    </TabsContent>
   )
 }
 
@@ -338,118 +380,164 @@ export default function Home() {
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
       </Head>
 
-      <main className="page-shell">
+      <main className="app-shell">
         <header className="site-header">
           <nav className="site-nav" aria-label="Primary navigation">
             <a className="nav-brand" href="#top" aria-label="Go to top of FoxSell changelog">
               <Image src="/assets/foxsell-logo.svg" alt="FoxSell" width={144} height={38} priority />
             </a>
 
-            <div className="nav-desktop-links">
+            <div className="nav-links">
               {navigationLinks.map((navigationLink) => (
-                <a key={navigationLink.label} className="nav-link" href={navigationLink.href} target="_blank" rel="noreferrer">
-                  {navigationLink.label}
-                </a>
+                <Button asChild key={navigationLink.label} variant="ghost" size="sm">
+                  <a href={navigationLink.href} target="_blank" rel="noreferrer">
+                    {navigationLink.label}
+                  </a>
+                </Button>
               ))}
             </div>
 
-            <div className="nav-desktop-actions">
-              <LinkButton href="#latest-updates" variant="ghost" className="nav-inline-action">
-                Latest updates
-              </LinkButton>
-              <LinkButton href={appStoreUrl} variant="primary" className="nav-inline-action" external>
-                Install app
-              </LinkButton>
+            <div className="nav-actions">
+              <Button asChild variant="secondary" size="sm">
+                <a href="#latest-updates">Latest updates</a>
+              </Button>
+              <Button asChild size="sm">
+                <a href={appStoreUrl} target="_blank" rel="noreferrer">
+                  Install app
+                  <ExternalLink size={14} strokeWidth={2.2} />
+                </a>
+              </Button>
             </div>
 
-            <div className="nav-mobile-actions">
-              <LinkButton href={appStoreUrl} variant="primary" className="nav-mobile-cta" external>
-                Install
-              </LinkButton>
-              <MobileNavigation />
+            <div className="mobile-menu">
+              <NavMenu />
             </div>
           </nav>
         </header>
 
         <section className="hero-section" id="top">
-          <div className="hero-background-orb hero-background-orb-left" />
-          <div className="hero-background-orb hero-background-orb-right" />
-
-          <div className="hero-topbar">
-            <span className="brand-caption">Product changelog</span>
-            <Surface className="hero-announcement">
-              <Sparkles size={16} strokeWidth={2.1} />
-              <span>Shipping clearer bundle experiences for merchants every week</span>
-            </Surface>
-          </div>
-
-          <div className="hero-grid hero-grid-single">
-            <div className="hero-copy-column">
-              <span className="eyebrow">What&apos;s new</span>
-              <h1>Product updates that help merchants launch better bundles, faster</h1>
-              <p className="hero-copy">
-                Follow the latest FoxSell launches, refinements, and fixes in one polished stream built for merchants who want clarity, not clutter.
-              </p>
-
-              <div className="hero-actions">
-                <LinkButton href="#featured-release" variant="primary">
+          <div className="hero-copy">
+            <Badge variant="outline">
+              <Sparkles size={14} strokeWidth={2.25} />
+              Product changelog
+            </Badge>
+            <h1>Every FoxSell release, organized for merchants who are building momentum.</h1>
+            <p>
+              Track launches, storefront improvements, and reliability fixes in a shadcn-powered release desk that keeps the FoxSell brand familiar while making the changelog easier to scan.
+            </p>
+            <div className="hero-actions">
+              <Button asChild size="lg">
+                <a href="#featured-release">
                   Read featured release
-                  <ArrowRight size={18} strokeWidth={2.2} />
-                </LinkButton>
-                <LinkButton href="#latest-updates" variant="secondary">
-                  Latest updates
-                </LinkButton>
-              </div>
+                  <ArrowRight size={18} strokeWidth={2.25} />
+                </a>
+              </Button>
+              <Button asChild variant="secondary" size="lg">
+                <a href="#latest-updates">Open archive</a>
+              </Button>
             </div>
           </div>
+
+          <Card className="release-console">
+            <CardHeader>
+              <div className="release-console-topline">
+                <span>Release desk</span>
+                <Badge variant="success">Live</Badge>
+              </div>
+              <CardTitle>{featuredStory.title}</CardTitle>
+              <CardDescription>{featuredStory.summary}</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="console-metrics">
+                {updateStats.map((stat) => (
+                  <div className="console-metric" key={stat.label}>
+                    <strong>{stat.value}</strong>
+                    <span>{stat.label}</span>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+            <CardFooter>
+              <a href="#latest-updates" className="console-link">
+                Browse the full release archive
+                <ChevronRight size={16} strokeWidth={2.25} />
+              </a>
+            </CardFooter>
+          </Card>
+        </section>
+
+        <section className="spotlight-section" aria-label="Release focus areas">
+          {spotlightCards.map((card) => {
+            const Icon = card.icon
+
+            return (
+              <Card className="spotlight-card" key={card.label}>
+                <CardHeader>
+                  <span className="spotlight-icon">
+                    <Icon size={20} strokeWidth={2.25} />
+                  </span>
+                  <CardTitle>{card.label}</CardTitle>
+                  <CardDescription>{card.copy}</CardDescription>
+                </CardHeader>
+              </Card>
+            )
+          })}
         </section>
 
         <section className="featured-section" id="featured-release">
-          <div className="section-heading-row section-heading-row-full">
-            <div>
-              <span className="section-kicker">Featured release</span>
-              <h2>{featuredStory.title}</h2>
-            </div>
+          <div className="section-heading">
+            <Badge variant="outline">Featured release</Badge>
+            <h2>Latest improvements, pulled forward for quick review.</h2>
           </div>
 
-          <Surface asChild>
-            <article className="featured-card">
-              <div className="entry-header">
-                <div>
-                  <div className="entry-date">{featuredStory.date}</div>
-                </div>
-                <span className="entry-tag">{featuredStory.tag}</span>
+          <Card className="featured-card">
+            <CardHeader>
+              <div className="release-card-meta">
+                <span className="release-date">
+                  <CalendarDays size={15} strokeWidth={2.1} />
+                  {featuredStory.date}
+                </span>
+                <ReleaseBadge tag={featuredStory.tag} />
               </div>
-              <p>{featuredStory.summary}</p>
-              <ul>
+              <CardTitle>{featuredStory.title}</CardTitle>
+              <CardDescription>{featuredStory.summary}</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ul className="featured-bullets">
                 {featuredStory.bullets.map((bullet) => (
-                  <li key={bullet}>{bullet}</li>
+                  <li key={bullet}>
+                    <CheckCircle2 size={17} strokeWidth={2.35} />
+                    <span>{bullet}</span>
+                  </li>
                 ))}
               </ul>
-            </article>
-          </Surface>
+            </CardContent>
+          </Card>
         </section>
 
-        <section className="timeline-section" id="latest-updates">
-          <div className="section-heading-row section-heading-row-full section-heading-row-archive">
-            <div>
-              <span className="section-kicker">Release archive</span>
-              <h2>A changelog designed for browsing, not skimming past</h2>
-            </div>
+        <section className="archive-section" id="latest-updates">
+          <div className="section-heading archive-heading">
+            <Badge variant="outline">Release archive</Badge>
+            <h2>Filter updates by the work your team cares about.</h2>
           </div>
 
-          <Surface className="timeline-shell">
-            <div className="timeline-shell-header">
-              <span className="timeline-shell-kicker">Latest updates</span>
-              <p>Browse recent launches, storefront polish, and reliability improvements in one continuous release stream.</p>
-            </div>
-
-            <ol className="timeline-list">
-              {changelogEntries.map((entry, index) => (
-                <TimelineEntry key={`${entry.date}-${entry.title}`} entry={entry} index={index} />
+          <Tabs defaultValue="All" className="release-tabs">
+            <TabsList aria-label="Filter changelog entries">
+              {categoryTabs.map((category) => (
+                <TabsTrigger value={category} key={category}>
+                  {category}
+                </TabsTrigger>
               ))}
-            </ol>
-          </Surface>
+            </TabsList>
+
+            {categoryTabs.map((category) => (
+              <ReleasePane
+                key={category}
+                value={category}
+                entries={category === "All" ? changelogEntries : changelogEntries.filter((entry) => entry.tag === category)}
+              />
+            ))}
+          </Tabs>
         </section>
       </main>
     </>
