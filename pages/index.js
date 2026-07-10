@@ -21,6 +21,7 @@ import {
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
@@ -42,6 +43,12 @@ const releaseImages = {
     src: "https://raw.githubusercontent.com/knox-the-fox/foxsell-helpdoc-assets/master/supercut-bundle-builders-2026-07-08-refresh/tiered-template-31s.jpg",
     alt: "FoxSell help docs showing the Tiered Bundle Builder setup template selection screen",
     caption: "Tiered Bundle Builder setup from the FoxSell help docs",
+    sourceUrl: "https://help.foxsell.app/en/article/how-to-set-up-tiered-bundle-builder-on-your-store-4zvwze/"
+  },
+  tieredStorefront: {
+    src: "https://raw.githubusercontent.com/knox-the-fox/foxsell-helpdoc-assets/master/supercut-bundle-builders-2026-07-08-refresh/tiered-storefront-328s.jpg",
+    alt: "FoxSell help docs showing a Tiered Bundle Builder storefront preview with tiered product selections",
+    caption: "Tiered Bundle Builder storefront preview from the FoxSell help docs",
     sourceUrl: "https://help.foxsell.app/en/article/how-to-set-up-tiered-bundle-builder-on-your-store-4zvwze/"
   },
   guidedStorefront: {
@@ -728,7 +735,7 @@ export default function Home() {
 
           <Card className="featured-card">
             <div className="featured-media">
-              <ReleaseImage image={releaseImages.tieredTemplate} compact />
+              <ReleaseImage image={releaseImages.tieredStorefront} compact />
             </div>
             <div className="featured-content">
               <CardHeader>
@@ -775,13 +782,18 @@ export default function Home() {
 
             <label className="mobile-category-filter">
               <span>Category</span>
-              <select value={selectedCategory} onChange={(event) => setSelectedCategory(event.target.value)}>
-                {categoryTabs.map((category) => (
-                  <option value={category} key={category}>
-                    {category}
-                  </option>
-                ))}
-              </select>
+              <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                <SelectTrigger aria-label="Filter changelog entries by category">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {categoryTabs.map((category) => (
+                    <SelectItem value={category} key={category}>
+                      {category}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </label>
 
             {!isMobileViewport ? (
