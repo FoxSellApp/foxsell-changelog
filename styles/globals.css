@@ -1254,6 +1254,10 @@ html[data-theme="dark"] .theme-toggle .theme-toggle-sun {
     outline-offset: 2px;
   }
 
+  .view-tabs {
+    display: none;
+  }
+
   .ui-tabs-list {
     width: 100%;
     scroll-padding-inline: 6px;

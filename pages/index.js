@@ -242,6 +242,7 @@ const lightLogoUrl = "/assets/foxsell-logo.svg"
 const darkLogoUrl = "/assets/foxsell-logo-white.svg"
 const themeStorageKey = "foxsell-changelog-theme"
 const themeChangeEvent = "foxsell-changelog-theme-change"
+const mobileViewportQuery = "(max-width: 700px)"
 
 const navigationLinks = [
   {
@@ -283,6 +284,24 @@ function subscribeToThemeStore(onStoreChange) {
 
   return () => {
     window.removeEventListener(themeChangeEvent, onStoreChange)
+    mediaQuery.removeEventListener("change", onStoreChange)
+  }
+}
+
+function getMobileViewportSnapshot() {
+  return window.matchMedia(mobileViewportQuery).matches
+}
+
+function getServerMobileViewportSnapshot() {
+  return false
+}
+
+function subscribeToMobileViewport(onStoreChange) {
+  const mediaQuery = window.matchMedia(mobileViewportQuery)
+
+  mediaQuery.addEventListener("change", onStoreChange)
+
+  return () => {
     mediaQuery.removeEventListener("change", onStoreChange)
   }
 }
@@ -534,6 +553,11 @@ function TimelineView({ entries }) {
 
 export default function Home() {
   const theme = useSyncExternalStore(subscribeToThemeStore, getThemeSnapshot, getServerThemeSnapshot)
+  const isMobileViewport = useSyncExternalStore(
+    subscribeToMobileViewport,
+    getMobileViewportSnapshot,
+    getServerMobileViewportSnapshot
+  )
   const [selectedCategory, setSelectedCategory] = useState("All")
   const [releaseView, setReleaseView] = useState("Timeline")
 
@@ -545,6 +569,7 @@ export default function Home() {
 
     return changelogEntries.filter((entry) => entry.tag === selectedCategory)
   }, [selectedCategory])
+  const visibleReleaseView = isMobileViewport ? "Timeline" : releaseView
 
   const toggleTheme = () => {
     const updatedTheme = theme === "dark" ? "light" : "dark"
@@ -759,15 +784,17 @@ export default function Home() {
               </select>
             </label>
 
-            <Tabs value={releaseView} onValueChange={setReleaseView} className="view-tabs">
-              <TabsList aria-label="Choose changelog presentation">
-                <TabsTrigger value="Cards">Cards</TabsTrigger>
-                <TabsTrigger value="Timeline">Timeline</TabsTrigger>
-              </TabsList>
-            </Tabs>
+            {!isMobileViewport ? (
+              <Tabs value={releaseView} onValueChange={setReleaseView} className="view-tabs">
+                <TabsList aria-label="Choose changelog presentation">
+                  <TabsTrigger value="Cards">Cards</TabsTrigger>
+                  <TabsTrigger value="Timeline">Timeline</TabsTrigger>
+                </TabsList>
+              </Tabs>
+            ) : null}
           </div>
 
-          {releaseView === "Timeline" ? <TimelineView entries={filteredEntries} /> : <ReleaseGrid entries={filteredEntries} />}
+          {visibleReleaseView === "Timeline" ? <TimelineView entries={filteredEntries} /> : <ReleaseGrid entries={filteredEntries} />}
         </section>
       </main>
     </>
