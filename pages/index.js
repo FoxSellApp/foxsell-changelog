@@ -485,19 +485,17 @@ function TimelineView({ entries }) {
 }
 
 export default function Home() {
-  const [theme, setTheme] = useState("light")
+  const [theme, setTheme] = useState(() => {
+    if (typeof window === "undefined") {
+      return "light"
+    }
+
+    const storedTheme = window.localStorage.getItem("foxsell-changelog-theme")
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches
+    return storedTheme || (prefersDark ? "dark" : "light")
+  })
   const [selectedCategory, setSelectedCategory] = useState("All")
   const [releaseView, setReleaseView] = useState("Timeline")
-
-  useEffect(() => {
-    const frame = window.requestAnimationFrame(() => {
-      const storedTheme = window.localStorage.getItem("foxsell-changelog-theme")
-      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches
-      setTheme(storedTheme || (prefersDark ? "dark" : "light"))
-    })
-
-    return () => window.cancelAnimationFrame(frame)
-  }, [])
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme
