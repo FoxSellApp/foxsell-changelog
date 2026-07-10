@@ -68,10 +68,10 @@ html[data-theme="dark"] {
   --soft-surface: #1b2022;
   --white-surface: rgba(23, 27, 29, 0.9);
   --white-surface-strong: #202527;
-  --dark-surface: #fff7f0;
-  --dark-surface-soft: #fff0e8;
-  --dark-surface-foreground: #1f1713;
-  --dark-surface-muted: rgba(31, 23, 19, 0.74);
+  --dark-surface: #111618;
+  --dark-surface-soft: #1a2022;
+  --dark-surface-foreground: #fffaf6;
+  --dark-surface-muted: rgba(255, 250, 246, 0.78);
   --shadow-sm: 0 10px 24px rgba(0, 0, 0, 0.24);
   --shadow-md: 0 22px 54px rgba(0, 0, 0, 0.28);
   --shadow-lg: 0 30px 82px rgba(0, 0, 0, 0.34);
@@ -170,6 +170,60 @@ img {
   justify-content: flex-end;
 }
 
+.theme-toggle {
+  position: relative;
+  display: inline-grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  width: 70px;
+  height: 40px;
+  padding: 4px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--white-surface-strong) 78%, transparent);
+  color: var(--muted-foreground);
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+}
+
+.theme-toggle-thumb {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  background: var(--foreground);
+  box-shadow: 0 8px 18px rgba(31, 23, 19, 0.16);
+  transition: transform 180ms ease, background-color 180ms ease;
+}
+
+.theme-toggle[aria-pressed="true"] .theme-toggle-thumb {
+  transform: translateX(30px);
+  background: var(--primary);
+}
+
+.theme-toggle-icon {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  transition: color 180ms ease;
+}
+
+.theme-toggle-sun,
+.theme-toggle[aria-pressed="true"] .theme-toggle-moon {
+  color: var(--background);
+}
+
+.theme-toggle-moon,
+.theme-toggle[aria-pressed="true"] .theme-toggle-sun {
+  color: var(--muted-foreground);
+}
+
 .mobile-menu {
   display: none;
   align-items: center;
@@ -197,10 +251,10 @@ img {
 }
 
 .hero-copy h1 {
-  max-width: 800px;
-  margin: 22px 0 20px;
-  font-size: clamp(38px, 5vw, 60px);
-  line-height: 1.02;
+  max-width: 700px;
+  margin: 20px 0 18px;
+  font-size: clamp(30px, 3.8vw, 46px);
+  line-height: 1.08;
   letter-spacing: 0;
 }
 
@@ -222,7 +276,7 @@ img {
 .release-console {
   align-self: stretch;
   background:
-    linear-gradient(180deg, color-mix(in srgb, var(--dark-surface) 94%, transparent), color-mix(in srgb, var(--dark-surface-soft) 92%, transparent)),
+    linear-gradient(180deg, color-mix(in srgb, var(--dark-surface) 96%, transparent), color-mix(in srgb, var(--dark-surface-soft) 96%, transparent)),
     var(--dark-surface);
   color: var(--dark-surface-foreground);
 }
@@ -262,12 +316,13 @@ img {
   display: grid;
   gap: 4px;
   padding: 14px;
-  border: 1px solid color-mix(in srgb, var(--dark-surface-foreground) 16%, transparent);
+  border: 1px solid color-mix(in srgb, var(--dark-surface-foreground) 14%, transparent);
   border-radius: var(--radius);
-  background: color-mix(in srgb, var(--dark-surface-foreground) 9%, transparent);
+  background: color-mix(in srgb, var(--dark-surface-foreground) 7%, transparent);
 }
 
 .console-metric strong {
+  color: var(--dark-surface-foreground);
   font-size: 28px;
   line-height: 1;
 }
@@ -282,7 +337,7 @@ img {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  color: var(--dark-surface-foreground);
+  color: #ff9a67;
   font-weight: 800;
 }
 
@@ -544,6 +599,7 @@ img {
 
 .ui-button:focus-visible,
 .ui-tabs-trigger:focus-visible,
+.theme-toggle:focus-visible,
 .sheet-link:focus-visible,
 .console-link:focus-visible,
 .nav-brand:focus-visible {
@@ -592,6 +648,14 @@ img {
   background: var(--white-surface);
   color: var(--card-foreground);
   box-shadow: var(--shadow-sm);
+}
+
+.ui-card.release-console {
+  border-color: color-mix(in srgb, var(--dark-surface-foreground) 14%, transparent);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--dark-surface) 96%, transparent), color-mix(in srgb, var(--dark-surface-soft) 96%, transparent)),
+    var(--dark-surface);
+  color: var(--dark-surface-foreground);
 }
 
 .ui-card-header {
@@ -716,6 +780,9 @@ img {
   .ui-badge,
   .ui-card,
   .ui-tabs-trigger,
+  .theme-toggle,
+  .theme-toggle-thumb,
+  .theme-toggle-icon,
   .ui-sheet-content,
   .sheet-link,
   .console-link {
@@ -724,6 +791,8 @@ img {
 
   .ui-button:hover,
   .ui-button:focus-visible,
+  .theme-toggle:hover,
+  .theme-toggle:focus-visible,
   .sheet-link:hover,
   .sheet-link:focus-visible,
   .console-link:hover,

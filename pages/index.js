@@ -268,15 +268,21 @@ function ThemeToggle({ isDarkMode, onToggle }) {
   const nextTheme = isDarkMode ? "light" : "dark"
 
   return (
-    <Button
+    <button
       type="button"
-      variant="outline"
-      size="icon"
+      className="theme-toggle"
       aria-label={`Switch to ${nextTheme} mode`}
+      aria-pressed={isDarkMode}
       onClick={onToggle}
     >
-      {isDarkMode ? <Sun size={17} strokeWidth={2.2} /> : <Moon size={17} strokeWidth={2.2} />}
-    </Button>
+      <span className="theme-toggle-thumb" aria-hidden="true" />
+      <span className="theme-toggle-icon theme-toggle-sun">
+        <Sun size={16} strokeWidth={2.2} />
+      </span>
+      <span className="theme-toggle-icon theme-toggle-moon">
+        <Moon size={16} strokeWidth={2.2} />
+      </span>
+    </button>
   )
 }
 
