@@ -21,6 +21,7 @@ import {
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
@@ -42,6 +43,12 @@ const releaseImages = {
     src: "https://raw.githubusercontent.com/knox-the-fox/foxsell-helpdoc-assets/master/supercut-bundle-builders-2026-07-08-refresh/tiered-template-31s.jpg",
     alt: "FoxSell help docs showing the Tiered Bundle Builder setup template selection screen",
     caption: "Tiered Bundle Builder setup from the FoxSell help docs",
+    sourceUrl: "https://help.foxsell.app/en/article/how-to-set-up-tiered-bundle-builder-on-your-store-4zvwze/"
+  },
+  tieredStorefront: {
+    src: "https://raw.githubusercontent.com/knox-the-fox/foxsell-helpdoc-assets/master/supercut-bundle-builders-2026-07-08-refresh/tiered-storefront-328s.jpg",
+    alt: "FoxSell help docs showing a Tiered Bundle Builder storefront preview with tiered product selections",
+    caption: "Tiered Bundle Builder storefront preview from the FoxSell help docs",
     sourceUrl: "https://help.foxsell.app/en/article/how-to-set-up-tiered-bundle-builder-on-your-store-4zvwze/"
   },
   guidedStorefront: {
@@ -234,7 +241,7 @@ const changelogEntries = [
 ]
 
 const changelogUrl = "https://changelog.foxsell.com"
-const socialPreviewImageUrl = `${changelogUrl}/social-preview.png`
+const socialPreviewImageUrl = `${changelogUrl}/assets/foxsell-changelog-feature.png`
 const websiteUrl = "https://www.foxsell.com/?utm_source=foxsell_changelog&utm_medium=navbar&utm_campaign=public_changelog"
 const appStoreUrl = "https://apps.shopify.com/foxsell-bundles-plus?utm_source=foxsell_changelog&utm_medium=cta&utm_campaign=public_changelog"
 const helpDocsUrl = "https://help.foxsell.app/en/"
@@ -242,6 +249,7 @@ const lightLogoUrl = "/assets/foxsell-logo.svg"
 const darkLogoUrl = "/assets/foxsell-logo-white.svg"
 const themeStorageKey = "foxsell-changelog-theme"
 const themeChangeEvent = "foxsell-changelog-theme-change"
+const mobileViewportQuery = "(max-width: 700px)"
 
 const navigationLinks = [
   {
@@ -283,6 +291,24 @@ function subscribeToThemeStore(onStoreChange) {
 
   return () => {
     window.removeEventListener(themeChangeEvent, onStoreChange)
+    mediaQuery.removeEventListener("change", onStoreChange)
+  }
+}
+
+function getMobileViewportSnapshot() {
+  return window.matchMedia(mobileViewportQuery).matches
+}
+
+function getServerMobileViewportSnapshot() {
+  return false
+}
+
+function subscribeToMobileViewport(onStoreChange) {
+  const mediaQuery = window.matchMedia(mobileViewportQuery)
+
+  mediaQuery.addEventListener("change", onStoreChange)
+
+  return () => {
     mediaQuery.removeEventListener("change", onStoreChange)
   }
 }
@@ -390,8 +416,8 @@ function ReleaseImage({ image, compact = false }) {
 
   return (
     <figure className={compact ? "release-image release-image-compact" : "release-image"}>
-      <a href={image.sourceUrl} target="_blank" rel="noreferrer" aria-label={`Open help doc source for ${image.caption}`}>
-        <Image src={image.src} alt={image.alt} width={640} height={360} sizes="(max-width: 700px) 100vw, 420px" />
+      <a href={image.sourceUrl} target="_blank" rel="noreferrer" aria-label={`Open image source for ${image.caption}`}>
+        <Image src={image.src} alt={image.alt} width={image.width ?? 640} height={image.height ?? 360} sizes="(max-width: 700px) 100vw, 420px" />
       </a>
       <figcaption>{image.caption}</figcaption>
     </figure>
@@ -513,7 +539,7 @@ function TimelineView({ entries }) {
               <CardDescription>{entry.summary}</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="timeline-card-body">
+              <div className={entry.image ? "timeline-card-body" : "timeline-card-body timeline-card-body-text-only"}>
                 <ReleaseImage image={entry.image} compact />
                 <ul className="release-bullets">
                   {entry.bullets.map((bullet) => (
@@ -534,6 +560,11 @@ function TimelineView({ entries }) {
 
 export default function Home() {
   const theme = useSyncExternalStore(subscribeToThemeStore, getThemeSnapshot, getServerThemeSnapshot)
+  const isMobileViewport = useSyncExternalStore(
+    subscribeToMobileViewport,
+    getMobileViewportSnapshot,
+    getServerMobileViewportSnapshot
+  )
   const [selectedCategory, setSelectedCategory] = useState("All")
   const [releaseView, setReleaseView] = useState("Timeline")
 
@@ -545,6 +576,7 @@ export default function Home() {
 
     return changelogEntries.filter((entry) => entry.tag === selectedCategory)
   }, [selectedCategory])
+  const visibleReleaseView = isMobileViewport ? "Timeline" : releaseView
 
   const toggleTheme = () => {
     const updatedTheme = theme === "dark" ? "light" : "dark"
@@ -570,9 +602,9 @@ export default function Home() {
         <meta property="og:site_name" content="FoxSell Changelog" />
         <meta property="og:image" content={socialPreviewImageUrl} />
         <meta property="og:image:secure_url" content={socialPreviewImageUrl} />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content="FoxSell changelog social preview with branded product update artwork" />
+        <meta property="og:image:width" content="1774" />
+        <meta property="og:image:height" content="887" />
+        <meta property="og:image:alt" content="FoxSell changelog social preview showing product update cards and release highlights" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="FoxSell Changelog" />
         <meta
@@ -580,7 +612,7 @@ export default function Home() {
           content="Browse the latest FoxSell launches, improvements, and fixes in a premium merchant-friendly changelog."
         />
         <meta name="twitter:image" content={socialPreviewImageUrl} />
-        <meta name="twitter:image:alt" content="FoxSell changelog social preview with branded product update artwork" />
+        <meta name="twitter:image:alt" content="FoxSell changelog social preview showing product update cards and release highlights" />
         <link rel="canonical" href={changelogUrl} />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
@@ -748,15 +780,33 @@ export default function Home() {
               </TabsList>
             </Tabs>
 
-            <Tabs value={releaseView} onValueChange={setReleaseView} className="view-tabs">
-              <TabsList aria-label="Choose changelog presentation">
-                <TabsTrigger value="Cards">Cards</TabsTrigger>
-                <TabsTrigger value="Timeline">Timeline</TabsTrigger>
-              </TabsList>
-            </Tabs>
+            <label className="mobile-category-filter">
+              <span>Category</span>
+              <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                <SelectTrigger aria-label="Filter changelog entries by category">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {categoryTabs.map((category) => (
+                    <SelectItem value={category} key={category}>
+                      {category}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </label>
+
+            {!isMobileViewport ? (
+              <Tabs value={releaseView} onValueChange={setReleaseView} className="view-tabs">
+                <TabsList aria-label="Choose changelog presentation">
+                  <TabsTrigger value="Cards">Cards</TabsTrigger>
+                  <TabsTrigger value="Timeline">Timeline</TabsTrigger>
+                </TabsList>
+              </Tabs>
+            ) : null}
           </div>
 
-          {releaseView === "Timeline" ? <TimelineView entries={filteredEntries} /> : <ReleaseGrid entries={filteredEntries} />}
+          {visibleReleaseView === "Timeline" ? <TimelineView entries={filteredEntries} /> : <ReleaseGrid entries={filteredEntries} />}
         </section>
       </main>
     </>
