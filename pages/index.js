@@ -39,14 +39,6 @@ const featuredStory = {
 }
 
 const releaseImages = {
-  changelogFeature: {
-    src: "/assets/foxsell-changelog-feature.png",
-    alt: "FoxSell changelog feature artwork showing product update cards and release highlights",
-    caption: "FoxSell changelog feature artwork",
-    sourceUrl: "/assets/foxsell-changelog-feature.png",
-    width: 1774,
-    height: 887
-  },
   tieredTemplate: {
     src: "https://raw.githubusercontent.com/knox-the-fox/foxsell-helpdoc-assets/master/supercut-bundle-builders-2026-07-08-refresh/tiered-template-31s.jpg",
     alt: "FoxSell help docs showing the Tiered Bundle Builder setup template selection screen",
@@ -249,7 +241,7 @@ const changelogEntries = [
 ]
 
 const changelogUrl = "https://changelog.foxsell.com"
-const socialPreviewImageUrl = `${changelogUrl}/social-preview.png`
+const socialPreviewImageUrl = `${changelogUrl}/assets/foxsell-changelog-feature.png`
 const websiteUrl = "https://www.foxsell.com/?utm_source=foxsell_changelog&utm_medium=navbar&utm_campaign=public_changelog"
 const appStoreUrl = "https://apps.shopify.com/foxsell-bundles-plus?utm_source=foxsell_changelog&utm_medium=cta&utm_campaign=public_changelog"
 const helpDocsUrl = "https://help.foxsell.app/en/"
@@ -610,9 +602,9 @@ export default function Home() {
         <meta property="og:site_name" content="FoxSell Changelog" />
         <meta property="og:image" content={socialPreviewImageUrl} />
         <meta property="og:image:secure_url" content={socialPreviewImageUrl} />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content="FoxSell changelog social preview with branded product update artwork" />
+        <meta property="og:image:width" content="1774" />
+        <meta property="og:image:height" content="887" />
+        <meta property="og:image:alt" content="FoxSell changelog social preview showing product update cards and release highlights" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="FoxSell Changelog" />
         <meta
@@ -620,7 +612,7 @@ export default function Home() {
           content="Browse the latest FoxSell launches, improvements, and fixes in a premium merchant-friendly changelog."
         />
         <meta name="twitter:image" content={socialPreviewImageUrl} />
-        <meta name="twitter:image:alt" content="FoxSell changelog social preview with branded product update artwork" />
+        <meta name="twitter:image:alt" content="FoxSell changelog social preview showing product update cards and release highlights" />
         <link rel="canonical" href={changelogUrl} />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
@@ -743,7 +735,7 @@ export default function Home() {
 
           <Card className="featured-card">
             <div className="featured-media">
-              <ReleaseImage image={releaseImages.changelogFeature} compact />
+              <ReleaseImage image={releaseImages.tieredTemplate} compact />
             </div>
             <div className="featured-content">
               <CardHeader>
