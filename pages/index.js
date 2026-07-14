@@ -43,58 +43,56 @@ const releaseImages = {
     src: "https://raw.githubusercontent.com/knox-the-fox/foxsell-helpdoc-assets/master/supercut-bundle-builders-2026-07-08-refresh/tiered-template-31s.jpg",
     alt: "FoxSell help docs showing the Tiered Bundle Builder setup template selection screen",
     caption: "Tiered Bundle Builder setup from the FoxSell help docs",
-    sourceUrl: "https://help.foxsell.app/en/article/how-to-set-up-tiered-bundle-builder-on-your-store-4zvwze/"
+    link: "https://help.foxsell.app/en/article/how-to-set-up-tiered-bundle-builder-on-your-store-4zvwze/"
   },
   tieredStorefront: {
     src: "https://raw.githubusercontent.com/knox-the-fox/foxsell-helpdoc-assets/master/supercut-bundle-builders-2026-07-08-refresh/tiered-storefront-328s.jpg",
     alt: "FoxSell help docs showing a Tiered Bundle Builder storefront preview with tiered product selections",
     caption: "Tiered Bundle Builder storefront preview from the FoxSell help docs",
-    sourceUrl: "https://help.foxsell.app/en/article/how-to-set-up-tiered-bundle-builder-on-your-store-4zvwze/"
+    link: "https://help.foxsell.app/en/article/how-to-set-up-tiered-bundle-builder-on-your-store-4zvwze/"
   },
   guidedStorefront: {
     src: "https://raw.githubusercontent.com/knox-the-fox/foxsell-helpdoc-assets/master/supercut-bundle-builders-2026-07-08-refresh/guided-storefront-342s.jpg",
     alt: "FoxSell help docs showing a Guided Steps Bundle Builder storefront preview",
     caption: "Guided Steps storefront preview from the FoxSell help docs",
-    sourceUrl: "https://help.foxsell.app/en/article/how-to-set-up-guided-steps-bundle-builder-on-your-store-1mppgmx/"
+    link: "https://help.foxsell.app/en/article/how-to-set-up-guided-steps-bundle-builder-on-your-store-1mppgmx/"
   },
   fixedInfiniteVariantSetup: {
     src: "https://raw.githubusercontent.com/knox-the-fox/foxsell-helpdoc-assets/master/03-products-addons-pricing.jpg",
     alt: "FoxSell help docs showing products, add-ons, and pricing setup for a fixed bundle with infinite variants",
     caption: "Fixed Bundle with Infinite Variants setup from the FoxSell help docs",
-    sourceUrl: "https://help.foxsell.app/en/article/how-to-set-up-fixed-bundle-with-infinite-variants-on-your-store-9eaxy8/"
+    link: "https://help.foxsell.app/en/article/how-to-set-up-fixed-bundle-with-infinite-variants-on-your-store-9eaxy8/"
   },
   fixedInfiniteVariantStorefront: {
     src: "https://raw.githubusercontent.com/knox-the-fox/foxsell-helpdoc-assets/master/08-storefront-builder.jpg",
     alt: "FoxSell help docs showing a storefront builder preview for Fixed Bundle with Infinite Variants",
     caption: "Storefront builder preview from the FoxSell help docs",
-    sourceUrl: "https://help.foxsell.app/en/article/how-to-set-up-fixed-bundle-with-infinite-variants-on-your-store-9eaxy8/"
+    link: "https://help.foxsell.app/en/article/how-to-set-up-fixed-bundle-with-infinite-variants-on-your-store-9eaxy8/"
   },
   themeSwatches: {
     src: "https://raw.githubusercontent.com/knox-the-fox/foxsell-helpdoc-assets/master/10-theme-settings-swatches.jpg",
     alt: "FoxSell help docs showing theme settings for color swatches",
     caption: "Theme swatch settings from the FoxSell help docs",
-    sourceUrl: "https://help.foxsell.app/en/article/how-to-set-up-fixed-bundle-with-infinite-variants-on-your-store-9eaxy8/"
+    link: "https://help.foxsell.app/en/article/how-to-set-up-fixed-bundle-with-infinite-variants-on-your-store-9eaxy8/"
   },
   sectionSetup: {
     src: "https://raw.githubusercontent.com/knox-the-fox/foxsell-helpdoc-assets/master/supercut-bundle-builders-2026-07-08-refresh/tiered-section_settings-430s.jpg",
     alt: "FoxSell help docs showing section settings for a Tiered Bundle Builder setup",
     caption: "Theme section settings from the FoxSell help docs",
-    sourceUrl: "https://help.foxsell.app/en/article/how-to-set-up-tiered-bundle-builder-on-your-store-4zvwze/"
+    link: "https://help.foxsell.app/en/article/how-to-set-up-tiered-bundle-builder-on-your-store-4zvwze/"
   },
   bundleSalesOrders: {
     src: "/assets/bundle-sales-orders-analytics.png",
     alt: "FoxSell Bundles Plus analytics page showing bundle sales orders with date, bundles, units sold, bundle sales, order total, and view order columns",
     caption: "Bundle sales orders in FoxSell analytics",
-    sourceUrl: "/assets/bundle-sales-orders-analytics.png",
-    width: 1672,
-    height: 941,
+    width: 2978,
+    height: 964,
     fit: "contain"
   },
   configurationBuilder: {
     src: "/assets/configuration-builder-preview.png",
     alt: "FoxSell Configuration Builder preview showing a visual bundle editor with products, controls, and storefront preview",
     caption: "Configuration Builder preview from the FoxSell dashboard",
-    sourceUrl: "/assets/configuration-builder-preview.png",
     width: 1774,
     height: 887
   },
@@ -102,15 +100,13 @@ const releaseImages = {
     src: "/assets/pos-bundle-editing.png",
     alt: "Illustration of the FoxSell POS bundle editor with guided steps, tier progress, selected products, and bundle validation",
     caption: "POS bundle editing for guided steps and tiered offers",
-    sourceUrl: "/assets/pos-bundle-editing.png",
-    width: 1672,
-    height: 941
+    width: 1774,
+    height: 887
   },
   dashboardHome: {
     src: "/assets/dashboard-home-refresh.png",
     alt: "Illustration of the refreshed FoxSell dashboard home with setup progress, recommended next steps, and bundle templates",
     caption: "Refreshed dashboard home for faster setup",
-    sourceUrl: "/assets/dashboard-home-refresh.png",
     width: 1774,
     height: 887
   }
@@ -485,9 +481,13 @@ function ReleaseImage({ image, compact = false }) {
 
   return (
     <figure className={releaseImageClassName}>
-      <a href={image.sourceUrl} target="_blank" rel="noreferrer" aria-label={`Open image source for ${image.caption}`}>
+      {image.link ? (
+        <a href={image.link} target="_blank" rel="noreferrer" aria-label={`Open related content for ${image.caption}`}>
+          <Image src={image.src} alt={image.alt} width={image.width ?? 640} height={image.height ?? 360} sizes="(max-width: 700px) 100vw, 420px" />
+        </a>
+      ) : (
         <Image src={image.src} alt={image.alt} width={image.width ?? 640} height={image.height ?? 360} sizes="(max-width: 700px) 100vw, 420px" />
-      </a>
+      )}
       <figcaption>{image.caption}</figcaption>
     </figure>
   )
