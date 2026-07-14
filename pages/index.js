@@ -482,11 +482,13 @@ function ReleaseImage({ image, compact = false }) {
   return (
     <figure className={releaseImageClassName}>
       {image.link ? (
-        <a href={image.link} target="_blank" rel="noreferrer" aria-label={`Open related content for ${image.caption}`}>
+        <a className="release-image-frame" href={image.link} target="_blank" rel="noreferrer" aria-label={`Open related content for ${image.caption}`}>
           <Image src={image.src} alt={image.alt} width={image.width ?? 640} height={image.height ?? 360} sizes="(max-width: 700px) 100vw, 420px" />
         </a>
       ) : (
-        <Image src={image.src} alt={image.alt} width={image.width ?? 640} height={image.height ?? 360} sizes="(max-width: 700px) 100vw, 420px" />
+        <span className="release-image-frame">
+          <Image src={image.src} alt={image.alt} width={image.width ?? 640} height={image.height ?? 360} sizes="(max-width: 700px) 100vw, 420px" />
+        </span>
       )}
       <figcaption>{image.caption}</figcaption>
     </figure>
