@@ -457,24 +457,11 @@ html[data-theme="dark"] .theme-toggle .theme-toggle-sun {
 
 .featured-media {
   display: grid;
+  align-content: start;
   min-height: 100%;
   padding: 18px;
   border-right: 1px solid var(--border);
   background: var(--soft-surface);
-}
-
-.featured-media .release-image,
-.featured-media .release-image-frame,
-.featured-media .release-image img {
-  min-height: 100%;
-}
-
-.featured-media .release-image {
-  align-content: start;
-}
-
-.featured-media .release-image img {
-  object-fit: cover;
 }
 
 .featured-content {
@@ -562,7 +549,9 @@ html[data-theme="dark"] .theme-toggle .theme-toggle-sun {
 }
 
 .release-image-frame {
-  display: block;
+  display: grid;
+  aspect-ratio: 16 / 9;
+  place-items: center;
   overflow: hidden;
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -571,18 +560,8 @@ html[data-theme="dark"] .theme-toggle .theme-toggle-sun {
 
 .release-image img {
   width: 100%;
-  height: auto;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
-}
-
-.release-image-contained .release-image-frame {
-  display: grid;
-  place-items: center;
-}
-
-.release-image-contained img,
-.featured-media .release-image-contained img {
+  height: 100%;
+  border-radius: calc(var(--radius) - 1px);
   object-fit: contain;
 }
 
@@ -1248,12 +1227,6 @@ html[data-theme="dark"] .theme-toggle .theme-toggle-sun {
 
   .featured-media {
     padding: 12px;
-  }
-
-  .featured-media .release-image,
-  .featured-media .release-image-frame,
-  .featured-media .release-image img {
-    min-height: 0;
   }
 
   .featured-card .ui-card-header,

@@ -86,8 +86,7 @@ const releaseImages = {
     alt: "FoxSell Bundles Plus analytics page showing bundle sales orders with date, bundles, units sold, bundle sales, order total, and view order columns",
     caption: "Bundle sales orders in FoxSell analytics",
     width: 1774,
-    height: 887,
-    fit: "contain"
+    height: 887
   },
   configurationBuilder: {
     src: "/assets/configuration-builder-preview.png",
@@ -473,8 +472,7 @@ function ReleaseImage({ image, compact = false }) {
 
   const releaseImageClassName = [
     "release-image",
-    compact ? "release-image-compact" : null,
-    image.fit === "contain" ? "release-image-contained" : null
+    compact ? "release-image-compact" : null
   ]
     .filter(Boolean)
     .join(" ")
