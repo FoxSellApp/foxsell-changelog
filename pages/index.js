@@ -26,15 +26,15 @@ import { Sheet, SheetClose, SheetContent, SheetDescription, SheetHeader, SheetTi
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 const featuredStory = {
-  date: "July 7, 2026",
-  tag: "Improvement",
-  title: "Video tutorials and steadier template setup",
+  date: "July 14, 2026",
+  tag: "Launch",
+  title: "Bundle sales orders are now easier to review",
   summary:
-    "Template setup now has clearer in-app video guidance, stronger save behavior, and smoother configuration across Tiered Bundle Builder, Guided Steps Bundle Builder, and Fixed Bundle with Infinite Variants.",
+    "Analytics now includes an order-level view of bundle sales, giving merchants a clearer path from revenue trends to the exact orders behind them.",
   bullets: [
-    "Setup screens now link directly to template-specific video tutorials for Tiered Bundle Builder, Guided Steps Bundle Builder, and Fixed Bundle with Infinite Variants",
-    "The Help page and home resources now surface the current FoxSell tutorial collection for Dashboard V2 merchants",
-    "Guided Steps Bundle Builder setup now handles automatic add-ons, step titles, and save-bar state more reliably while merchants configure offers"
+    "Review bundle sales orders across flexible date ranges, including the last 12 months",
+    "See the bundles sold, units sold, bundle sales, and total order value in one table",
+    "Open the matching Shopify order directly from analytics when you need to investigate a sale"
   ]
 }
 
@@ -80,10 +80,43 @@ const releaseImages = {
     alt: "FoxSell help docs showing section settings for a Tiered Bundle Builder setup",
     caption: "Theme section settings from the FoxSell help docs",
     sourceUrl: "https://help.foxsell.app/en/article/how-to-set-up-tiered-bundle-builder-on-your-store-4zvwze/"
+  },
+  bundleSalesOrders: {
+    src: "/assets/bundle-sales-orders-analytics.png",
+    alt: "FoxSell Bundles Plus analytics page showing bundle sales orders with date, bundles, units sold, bundle sales, order total, and view order columns",
+    caption: "Bundle sales orders in FoxSell analytics",
+    sourceUrl: "/assets/bundle-sales-orders-analytics.png",
+    width: 2978,
+    height: 964
   }
 }
 
 const changelogEntries = [
+  {
+    date: "July 14, 2026",
+    tag: "Launch",
+    title: "Order-level bundle sales analytics",
+    summary:
+      "Merchants can now inspect the orders behind bundle revenue from a dedicated Bundle sales orders report in analytics.",
+    bullets: [
+      "Filter bundle sales orders by date range, including a last 12 months view for longer performance reviews",
+      "Compare each order's bundles, units sold, bundle sales, and total order value without leaving the analytics table",
+      "Jump from the report to the matching Shopify order when you need to follow up on a specific sale"
+    ],
+    image: releaseImages.bundleSalesOrders
+  },
+  {
+    date: "July 14, 2026",
+    tag: "Launch",
+    title: "A new Configuration Builder path for eligible stores",
+    summary:
+      "Eligible merchants now have a direct entry point for a configuration-based bundle creation flow from the dashboard home and Mix and Match template selection.",
+    bullets: [
+      "Configuration Builder appears alongside other Mix and Match templates for stores with access",
+      "The dashboard now routes eligible merchants into the new creation path from template discovery",
+      "Localized template copy and preview imagery help merchants understand the new option before starting"
+    ]
+  },
   {
     date: "July 7, 2026",
     tag: "Improvement",
@@ -735,7 +768,7 @@ export default function Home() {
 
           <Card className="featured-card">
             <div className="featured-media">
-              <ReleaseImage image={releaseImages.tieredTemplate} compact />
+              <ReleaseImage image={releaseImages.bundleSalesOrders} compact />
             </div>
             <div className="featured-content">
               <CardHeader>
