@@ -86,8 +86,8 @@ const releaseImages = {
     alt: "FoxSell Bundles Plus analytics page showing bundle sales orders with date, bundles, units sold, bundle sales, order total, and view order columns",
     caption: "Bundle sales orders in FoxSell analytics",
     sourceUrl: "/assets/bundle-sales-orders-analytics.png",
-    width: 2978,
-    height: 964,
+    width: 1672,
+    height: 941,
     fit: "contain"
   },
   configurationBuilder: {
@@ -103,8 +103,8 @@ const releaseImages = {
     alt: "Illustration of the FoxSell POS bundle editor with guided steps, tier progress, selected products, and bundle validation",
     caption: "POS bundle editing for guided steps and tiered offers",
     sourceUrl: "/assets/pos-bundle-editing.png",
-    width: 1774,
-    height: 887
+    width: 1672,
+    height: 941
   },
   dashboardHome: {
     src: "/assets/dashboard-home-refresh.png",
