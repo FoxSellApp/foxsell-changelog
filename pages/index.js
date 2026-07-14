@@ -85,8 +85,8 @@ const releaseImages = {
     src: "/assets/bundle-sales-orders-analytics.png",
     alt: "FoxSell Bundles Plus analytics page showing bundle sales orders with date, bundles, units sold, bundle sales, order total, and view order columns",
     caption: "Bundle sales orders in FoxSell analytics",
-    width: 2978,
-    height: 964,
+    width: 1774,
+    height: 887,
     fit: "contain"
   },
   configurationBuilder: {
