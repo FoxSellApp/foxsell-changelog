@@ -87,7 +87,32 @@ const releaseImages = {
     caption: "Bundle sales orders in FoxSell analytics",
     sourceUrl: "/assets/bundle-sales-orders-analytics.png",
     width: 2978,
-    height: 964
+    height: 964,
+    fit: "contain"
+  },
+  configurationBuilder: {
+    src: "/assets/configuration-builder-preview.png",
+    alt: "FoxSell Configuration Builder preview showing a visual bundle editor with products, controls, and storefront preview",
+    caption: "Configuration Builder preview from the FoxSell dashboard",
+    sourceUrl: "/assets/configuration-builder-preview.png",
+    width: 1774,
+    height: 887
+  },
+  posBundleEditing: {
+    src: "/assets/pos-bundle-editing.png",
+    alt: "Illustration of the FoxSell POS bundle editor with guided steps, tier progress, selected products, and bundle validation",
+    caption: "POS bundle editing for guided steps and tiered offers",
+    sourceUrl: "/assets/pos-bundle-editing.png",
+    width: 1774,
+    height: 887
+  },
+  dashboardHome: {
+    src: "/assets/dashboard-home-refresh.png",
+    alt: "Illustration of the refreshed FoxSell dashboard home with setup progress, recommended next steps, and bundle templates",
+    caption: "Refreshed dashboard home for faster setup",
+    sourceUrl: "/assets/dashboard-home-refresh.png",
+    width: 1774,
+    height: 887
   }
 }
 
@@ -115,7 +140,8 @@ const changelogEntries = [
       "Configuration Builder appears alongside other Mix and Match templates for stores with access",
       "The dashboard now routes eligible merchants into the new creation path from template discovery",
       "Localized template copy and preview imagery help merchants understand the new option before starting"
-    ]
+    ],
+    image: releaseImages.configurationBuilder
   },
   {
     date: "July 7, 2026",
@@ -166,7 +192,8 @@ const changelogEntries = [
       "Guided Steps Bundle Builder and Tiered Bundle Builder offers are now supported directly in POS bundle configuration and edit flows",
       "Tier ladders, quantity rules, and add-on pricing are surfaced more clearly so staff can build bundles with fewer mistakes",
       "Editing a bundle now keeps the correct tier discount and updates the underlying bundle variant when quantity thresholds change"
-    ]
+    ],
+    image: releaseImages.posBundleEditing
   },
   {
     date: "June 12, 2026",
@@ -204,7 +231,8 @@ const changelogEntries = [
       "A more focused home experience that brings setup momentum closer to the surface",
       "Clearer guidance for the first actions that matter after install",
       "A cleaner visual hierarchy that makes the dashboard feel faster and more polished"
-    ]
+    ],
+    image: releaseImages.dashboardHome
   },
   {
     date: "May 16, 2026",
@@ -447,8 +475,16 @@ function ReleaseImage({ image, compact = false }) {
     return null
   }
 
+  const releaseImageClassName = [
+    "release-image",
+    compact ? "release-image-compact" : null,
+    image.fit === "contain" ? "release-image-contained" : null
+  ]
+    .filter(Boolean)
+    .join(" ")
+
   return (
-    <figure className={compact ? "release-image release-image-compact" : "release-image"}>
+    <figure className={releaseImageClassName}>
       <a href={image.sourceUrl} target="_blank" rel="noreferrer" aria-label={`Open image source for ${image.caption}`}>
         <Image src={image.src} alt={image.alt} width={image.width ?? 640} height={image.height ?? 360} sizes="(max-width: 700px) 100vw, 420px" />
       </a>

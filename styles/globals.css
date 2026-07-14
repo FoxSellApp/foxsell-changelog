@@ -576,6 +576,16 @@ html[data-theme="dark"] .theme-toggle .theme-toggle-sun {
   object-fit: cover;
 }
 
+.release-image-contained a {
+  display: grid;
+  place-items: center;
+}
+
+.release-image-contained img,
+.featured-media .release-image-contained img {
+  object-fit: contain;
+}
+
 .release-image figcaption {
   color: var(--muted-foreground);
   font-size: 12px;
