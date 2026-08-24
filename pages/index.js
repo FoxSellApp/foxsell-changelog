@@ -39,6 +39,41 @@ const featuredStory = {
 }
 
 const releaseImages = {
+  templateDuplication: {
+    src: "/assets/template-duplication.svg",
+    alt: "Illustration showing a template bundle duplicated into a new independent offer",
+    caption: "Reuse a template setup while keeping the original offer intact",
+    width: 1774,
+    height: 887
+  },
+  legacyMixMatch: {
+    src: "/assets/legacy-mix-match.svg",
+    alt: "Illustration showing an existing Mix and Match dashboard setup continuing to a compatible storefront bundle",
+    caption: "Existing Mix and Match setups continue to the matching storefront experience",
+    width: 1774,
+    height: 887
+  },
+  storefrontControls: {
+    src: "/assets/storefront-controls.svg",
+    alt: "Illustration of a bundle storefront with image thumbnails, quantity tiers, bundle pricing, and a free add-on",
+    caption: "Richer product presentation and bundle controls on the storefront",
+    width: 1774,
+    height: 887
+  },
+  indianCheckoutOnboarding: {
+    src: "/assets/indian-checkout-onboarding.svg",
+    alt: "Illustration of checkout compatibility onboarding with guided choices and access to support",
+    caption: "Checkout compatibility guidance before choosing a plan",
+    width: 1774,
+    height: 887
+  },
+  flexibleTemplateProducts: {
+    src: "/assets/flexible-template-products.svg",
+    alt: "Illustration showing a template bundle connected to an existing product or a newly created product",
+    caption: "Choose whether to reuse an existing product or create a separate one",
+    width: 1774,
+    height: 887
+  },
   tieredTemplate: {
     src: "https://raw.githubusercontent.com/knox-the-fox/foxsell-helpdoc-assets/master/supercut-bundle-builders-2026-07-08-refresh/tiered-template-31s.jpg",
     alt: "FoxSell help docs showing the Tiered Bundle Builder setup template selection screen",
@@ -123,7 +158,8 @@ const changelogEntries = [
       "Duplicate Glow, Shade, and Step template bundles from the bundle edit page",
       "Create an independent copy without changing the product linked to the original bundle",
       "Keep the original offer intact while adjusting products, pricing, and settings in the duplicate"
-    ]
+    ],
+    image: releaseImages.templateDuplication
   },
   {
     date: "August 20, 2026",
@@ -135,7 +171,8 @@ const changelogEntries = [
       "Legacy dashboard stores can access the theme block that matches their existing bundle setup",
       "Dashboard navigation now returns merchants to the correct version of the Mix and Match experience",
       "Existing bundle workflows remain available while stores move between dashboard experiences"
-    ]
+    ],
+    image: releaseImages.legacyMixMatch
   },
   {
     date: "August 19, 2026",
@@ -147,7 +184,8 @@ const changelogEntries = [
       "Product cards can show image galleries with thumbnail navigation",
       "Selected templates can show or hide the bundle price and offer manual quantity-tier selection",
       "Zero-priced add-ons display as Free, with more dependable add-on visibility and validation"
-    ]
+    ],
+    image: releaseImages.storefrontControls
   },
   {
     date: "August 17, 2026",
@@ -159,7 +197,8 @@ const changelogEntries = [
       "Identify whether customers use Shopify checkout or a redirected third-party checkout",
       "Follow clear compatibility guidance before continuing with setup",
       "Open support chat directly from onboarding when the checkout type is unclear"
-    ]
+    ],
+    image: releaseImages.indianCheckoutOnboarding
   },
   {
     date: "July 27, 2026",
@@ -171,7 +210,8 @@ const changelogEntries = [
       "Link an existing Shopify product while creating Glow, Shade, or Step template bundles",
       "Create a separate product for Shade bundles when a clean starting point is preferred",
       "Review the linked product directly in the setup flow before saving the bundle"
-    ]
+    ],
+    image: releaseImages.flexibleTemplateProducts
   },
   {
     date: "July 14, 2026",
@@ -866,7 +906,7 @@ export default function Home() {
 
           <Card className="featured-card">
             <div className="featured-media">
-              <ReleaseImage image={releaseImages.bundleSalesOrders} compact />
+              <ReleaseImage image={releaseImages.templateDuplication} compact />
             </div>
             <div className="featured-content">
               <CardHeader>
