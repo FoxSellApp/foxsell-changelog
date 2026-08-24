@@ -26,15 +26,15 @@ import { Sheet, SheetClose, SheetContent, SheetDescription, SheetHeader, SheetTi
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 const featuredStory = {
-  date: "July 14, 2026",
-  tag: "Launch",
-  title: "Bundle sales orders are now easier to review",
+  date: "August 20, 2026",
+  tag: "Improvement",
+  title: "Template bundles are easier to reuse",
   summary:
-    "Analytics now includes an order-level view of bundle sales, giving merchants a clearer path from revenue trends to the exact orders behind them.",
+    "Template-based bundles can now be duplicated from the edit page, making it faster to launch a similar offer without rebuilding it from scratch.",
   bullets: [
-    "Review bundle sales orders across flexible date ranges, including the last 12 months",
-    "See the bundles sold, units sold, bundle sales, and total order value in one table",
-    "Open the matching Shopify order directly from analytics when you need to investigate a sale"
+    "Duplicate Glow, Shade, and Step template bundles directly from their edit pages",
+    "Start each duplicate as an independent bundle so the original product connection stays untouched",
+    "Keep the original bundle available while using its setup as the starting point for a new offer"
   ]
 }
 
@@ -113,6 +113,66 @@ const releaseImages = {
 }
 
 const changelogEntries = [
+  {
+    date: "August 20, 2026",
+    tag: "Improvement",
+    title: "Duplicate template bundles from the edit page",
+    summary:
+      "Merchants can now reuse a supported template bundle as the starting point for a new offer.",
+    bullets: [
+      "Duplicate Glow, Shade, and Step template bundles from the bundle edit page",
+      "Create an independent copy without changing the product linked to the original bundle",
+      "Keep the original offer intact while adjusting products, pricing, and settings in the duplicate"
+    ]
+  },
+  {
+    date: "August 20, 2026",
+    tag: "Improvement",
+    title: "Better support for legacy Mix and Match setups",
+    summary:
+      "Stores using the original dashboard can continue working with the legacy Mix and Match theme block more reliably.",
+    bullets: [
+      "Legacy dashboard stores can access the theme block that matches their existing bundle setup",
+      "Dashboard navigation now returns merchants to the correct version of the Mix and Match experience",
+      "Existing bundle workflows remain available while stores move between dashboard experiences"
+    ]
+  },
+  {
+    date: "August 19, 2026",
+    tag: "Storefront",
+    title: "Richer product presentation and bundle controls",
+    summary:
+      "The latest storefront template updates give shoppers a clearer product view and merchants more control over bundle presentation.",
+    bullets: [
+      "Product cards can show image galleries with thumbnail navigation",
+      "Selected templates can show or hide the bundle price and offer manual quantity-tier selection",
+      "Zero-priced add-ons display as Free, with more dependable add-on visibility and validation"
+    ]
+  },
+  {
+    date: "August 17, 2026",
+    tag: "Improvement",
+    title: "Checkout compatibility guidance for Indian stores",
+    summary:
+      "Onboarding now helps Indian merchants confirm that their checkout can apply FoxSell bundle pricing before they choose a plan.",
+    bullets: [
+      "Identify whether customers use Shopify checkout or a redirected third-party checkout",
+      "Follow clear compatibility guidance before continuing with setup",
+      "Open support chat directly from onboarding when the checkout type is unclear"
+    ]
+  },
+  {
+    date: "July 27, 2026",
+    tag: "Improvement",
+    title: "More flexible product setup for template bundles",
+    summary:
+      "Template setup now gives merchants more choice over whether to reuse an existing Shopify product or create a separate one.",
+    bullets: [
+      "Link an existing Shopify product while creating Glow, Shade, or Step template bundles",
+      "Create a separate product for Shade bundles when a clean starting point is preferred",
+      "Review the linked product directly in the setup flow before saving the bundle"
+    ]
+  },
   {
     date: "July 14, 2026",
     tag: "Launch",
