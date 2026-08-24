@@ -26,19 +26,54 @@ import { Sheet, SheetClose, SheetContent, SheetDescription, SheetHeader, SheetTi
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 const featuredStory = {
-  date: "July 14, 2026",
-  tag: "Launch",
-  title: "Bundle sales orders are now easier to review",
+  date: "August 20, 2026",
+  tag: "Improvement",
+  title: "Template bundles are easier to reuse",
   summary:
-    "Analytics now includes an order-level view of bundle sales, giving merchants a clearer path from revenue trends to the exact orders behind them.",
+    "Template-based bundles can now be duplicated from the edit page, making it faster to launch a similar offer without rebuilding it from scratch.",
   bullets: [
-    "Review bundle sales orders across flexible date ranges, including the last 12 months",
-    "See the bundles sold, units sold, bundle sales, and total order value in one table",
-    "Open the matching Shopify order directly from analytics when you need to investigate a sale"
+    "Duplicate Tiered Bundle Builder, Fixed Bundle with Infinite Variants, and Guided Steps Bundle Builder offers directly from their edit pages",
+    "Start each duplicate as an independent bundle so the original product connection stays untouched",
+    "Keep the original bundle available while using its setup as the starting point for a new offer"
   ]
 }
 
 const releaseImages = {
+  templateDuplication: {
+    src: "/assets/template-duplication.svg",
+    alt: "Illustration showing a template bundle duplicated into a new independent offer",
+    caption: "Reuse a template setup while keeping the original offer intact",
+    width: 1774,
+    height: 887
+  },
+  legacyMixMatch: {
+    src: "/assets/legacy-mix-match.svg",
+    alt: "Illustration showing an existing Mix and Match dashboard setup continuing to a compatible storefront bundle",
+    caption: "Existing Mix and Match setups continue to the matching storefront experience",
+    width: 1774,
+    height: 887
+  },
+  storefrontControls: {
+    src: "/assets/storefront-controls.svg",
+    alt: "Illustration of a bundle storefront with image thumbnails, quantity tiers, bundle pricing, and a free add-on",
+    caption: "Richer product presentation and bundle controls on the storefront",
+    width: 1774,
+    height: 887
+  },
+  indianCheckoutOnboarding: {
+    src: "/assets/indian-checkout-onboarding.svg",
+    alt: "Illustration of checkout compatibility onboarding with guided choices and access to support",
+    caption: "Checkout compatibility guidance before choosing a plan",
+    width: 1774,
+    height: 887
+  },
+  flexibleTemplateProducts: {
+    src: "/assets/flexible-template-products.svg",
+    alt: "Illustration showing a template bundle connected to an existing product or a newly created product",
+    caption: "Choose whether to reuse an existing product or create a separate one",
+    width: 1774,
+    height: 887
+  },
   tieredTemplate: {
     src: "https://raw.githubusercontent.com/knox-the-fox/foxsell-helpdoc-assets/master/supercut-bundle-builders-2026-07-08-refresh/tiered-template-31s.jpg",
     alt: "FoxSell help docs showing the Tiered Bundle Builder setup template selection screen",
@@ -113,6 +148,71 @@ const releaseImages = {
 }
 
 const changelogEntries = [
+  {
+    date: "August 20, 2026",
+    tag: "Improvement",
+    title: "Duplicate template bundles from the edit page",
+    summary:
+      "Merchants can now reuse a supported template bundle as the starting point for a new offer.",
+    bullets: [
+      "Duplicate Tiered Bundle Builder, Fixed Bundle with Infinite Variants, and Guided Steps Bundle Builder offers from the bundle edit page",
+      "Create an independent copy without changing the product linked to the original bundle",
+      "Keep the original offer intact while adjusting products, pricing, and settings in the duplicate"
+    ],
+    image: releaseImages.templateDuplication
+  },
+  {
+    date: "August 20, 2026",
+    tag: "Improvement",
+    title: "Better support for legacy Mix and Match setups",
+    summary:
+      "Stores using the original dashboard can continue working with the legacy Mix and Match theme block more reliably.",
+    bullets: [
+      "Legacy dashboard stores can access the theme block that matches their existing bundle setup",
+      "Dashboard navigation now returns merchants to the correct version of the Mix and Match experience",
+      "Existing bundle workflows remain available while stores move between dashboard experiences"
+    ],
+    image: releaseImages.legacyMixMatch
+  },
+  {
+    date: "August 19, 2026",
+    tag: "Storefront",
+    title: "Richer product presentation and bundle controls",
+    summary:
+      "The latest storefront template updates give shoppers a clearer product view and merchants more control over bundle presentation.",
+    bullets: [
+      "Product cards can show image galleries with thumbnail navigation",
+      "Selected templates can show or hide the bundle price and offer manual quantity-tier selection",
+      "Zero-priced add-ons display as Free, with more dependable add-on visibility and validation"
+    ],
+    image: releaseImages.storefrontControls
+  },
+  {
+    date: "August 17, 2026",
+    tag: "Improvement",
+    title: "Checkout compatibility guidance for Indian stores",
+    summary:
+      "Onboarding now helps Indian merchants confirm that their checkout can apply FoxSell bundle pricing before they choose a plan.",
+    bullets: [
+      "Identify whether customers use Shopify checkout or a redirected third-party checkout",
+      "Follow clear compatibility guidance before continuing with setup",
+      "Open support chat directly from onboarding when the checkout type is unclear"
+    ],
+    image: releaseImages.indianCheckoutOnboarding
+  },
+  {
+    date: "July 27, 2026",
+    tag: "Improvement",
+    title: "More flexible product setup for template bundles",
+    summary:
+      "Template setup now gives merchants more choice over whether to reuse an existing Shopify product or create a separate one.",
+    bullets: [
+      "Link an existing Shopify product while creating Tiered Bundle Builder, Fixed Bundle with Infinite Variants, or Guided Steps Bundle Builder offers",
+      "Create a separate product for Fixed Bundle with Infinite Variants offers when a clean starting point is preferred",
+      "Review the linked product directly in the setup flow before saving the bundle"
+    ],
+    image: releaseImages.flexibleTemplateProducts
+  },
   {
     date: "July 14, 2026",
     tag: "Launch",
@@ -806,7 +906,7 @@ export default function Home() {
 
           <Card className="featured-card">
             <div className="featured-media">
-              <ReleaseImage image={releaseImages.bundleSalesOrders} compact />
+              <ReleaseImage image={releaseImages.templateDuplication} compact />
             </div>
             <div className="featured-content">
               <CardHeader>
