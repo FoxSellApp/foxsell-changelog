@@ -32,7 +32,7 @@ const featuredStory = {
   summary:
     "Template-based bundles can now be duplicated from the edit page, making it faster to launch a similar offer without rebuilding it from scratch.",
   bullets: [
-    "Duplicate Glow, Shade, and Step template bundles directly from their edit pages",
+    "Duplicate Tiered Bundle Builder, Fixed Bundle with Infinite Variants, and Guided Steps Bundle Builder offers directly from their edit pages",
     "Start each duplicate as an independent bundle so the original product connection stays untouched",
     "Keep the original bundle available while using its setup as the starting point for a new offer"
   ]
@@ -155,7 +155,7 @@ const changelogEntries = [
     summary:
       "Merchants can now reuse a supported template bundle as the starting point for a new offer.",
     bullets: [
-      "Duplicate Glow, Shade, and Step template bundles from the bundle edit page",
+      "Duplicate Tiered Bundle Builder, Fixed Bundle with Infinite Variants, and Guided Steps Bundle Builder offers from the bundle edit page",
       "Create an independent copy without changing the product linked to the original bundle",
       "Keep the original offer intact while adjusting products, pricing, and settings in the duplicate"
     ],
@@ -207,8 +207,8 @@ const changelogEntries = [
     summary:
       "Template setup now gives merchants more choice over whether to reuse an existing Shopify product or create a separate one.",
     bullets: [
-      "Link an existing Shopify product while creating Glow, Shade, or Step template bundles",
-      "Create a separate product for Shade bundles when a clean starting point is preferred",
+      "Link an existing Shopify product while creating Tiered Bundle Builder, Fixed Bundle with Infinite Variants, or Guided Steps Bundle Builder offers",
+      "Create a separate product for Fixed Bundle with Infinite Variants offers when a clean starting point is preferred",
       "Review the linked product directly in the setup flow before saving the bundle"
     ],
     image: releaseImages.flexibleTemplateProducts
