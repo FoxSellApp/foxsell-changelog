@@ -26,15 +26,15 @@ import { Sheet, SheetClose, SheetContent, SheetDescription, SheetHeader, SheetTi
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 const featuredStory = {
-  date: "August 20, 2026",
+  date: "November 13, 2026",
   tag: "Improvement",
-  title: "Template bundles are easier to reuse",
+  title: "Get straight to the right bundle editor",
   summary:
-    "Template-based bundles can now be duplicated from the edit page, making it faster to launch a similar offer without rebuilding it from scratch.",
+    "Opening a template-based Mix and Match bundle now takes you directly to its matching editor, so you can update an offer without navigating through a different setup screen.",
   bullets: [
-    "Duplicate Tiered Bundle Builder, Fixed Bundle with Infinite Variants, and Guided Steps Bundle Builder offers directly from their edit pages",
-    "Start each duplicate as an independent bundle so the original product connection stays untouched",
-    "Keep the original bundle available while using its setup as the starting point for a new offer"
+    "Open supported template bundles directly from the bundle list",
+    "Reach the same editor when opening a bundle from its Shopify product",
+    "Continue editing Tiered Bundle Builder, Fixed Bundle with Infinite Variants, and Guided Steps Bundle Builder offers in their dedicated setup flows"
   ]
 }
 
@@ -148,6 +148,90 @@ const releaseImages = {
 }
 
 const changelogEntries = [
+  {
+    date: "November 13, 2026",
+    tag: "Improvement",
+    title: "Open template bundles in the right editor",
+    summary:
+      "Template-based Mix and Match bundles now open directly in their matching setup flow.",
+    bullets: [
+      "Open Tiered Bundle Builder, Fixed Bundle with Infinite Variants, and Guided Steps Bundle Builder offers from the bundle list",
+      "Reach the same template editor when opening a bundle from its Shopify product",
+      "Keep using the standard editor for bundles that do not use one of these templates"
+    ]
+  },
+  {
+    date: "November 13, 2026",
+    tag: "Fixes",
+    title: "Clearer cart examples for custom bundle storefronts",
+    summary:
+      "The Mix and Match developer guide now includes a corrected add-to-cart example for agencies and developers building custom storefront experiences.",
+    bullets: [
+      "Follow the corrected example for sending selected bundle items to Shopify's cart",
+      "Use the configured category title for bundle products and the documented format for add-ons",
+      "Distinguish the bundle variant from the selected product variants when assembling a cart request"
+    ]
+  },
+  {
+    date: "October 30, 2026",
+    tag: "Improvement",
+    title: "Smoother dashboard navigation and bundle editing",
+    summary:
+      "The refreshed dashboard makes everyday bundle management more consistent, with steadier editing and clearer loading states.",
+    bullets: [
+      "Move from bundle and analytics tables to detail pages without a full app reload, while keeping new-tab shortcuts available",
+      "Edit Multi Variant option values without losing focus as you type",
+      "See recent sales and units sold for template bundles with sales activity directly in their editors, with a link to the full report",
+      "Keep add-on selection limits in sync with the available products when editing Tiered Bundle Builder and Guided Steps Bundle Builder offers"
+    ]
+  },
+  {
+    date: "September 15, 2026",
+    tag: "Storefront",
+    title: "Hide unavailable variant choices",
+    summary:
+      "Updated bundle templates can hide sold-out variants and variants excluded from the bundle, helping shoppers focus on choices they can select.",
+    bullets: [
+      "Enable Hide unavailable variants in the section or block settings of supported updated templates, including Tiered Bundle Builder, Fixed Bundle with Infinite Variants, and Guided Steps Bundle Builder",
+      "Keep dropdowns, radio choices, color swatches, and product details views aligned with the available combinations",
+      "Leave the setting off to retain the existing variant display; it is disabled by default"
+    ]
+  },
+  {
+    date: "September 4, 2026",
+    tag: "Storefront",
+    title: "Choose whether product images open a details drawer",
+    summary:
+      "The updated Fixed Bundle with Infinite Variants template gives merchants more control over product-card interactions.",
+    bullets: [
+      "Use Enable product details drawer in the bundle block settings to control whether clicking an image opens product details",
+      "Apply the choice to both bundle product cards and add-on cards",
+      "Keep the existing experience by leaving the setting enabled, which remains the default"
+    ]
+  },
+  {
+    date: "August 31, 2026",
+    tag: "Storefront",
+    title: "More focused category browsing and tier selection",
+    summary:
+      "The updated Tiered Bundle Builder gives shoppers a clearer starting point when browsing categories or choosing a bundle size.",
+    bullets: [
+      "Hide the All tab in category navigation to start shoppers in the first category",
+      "Keep the All tab visible when you prefer to show every category together",
+      "When manual tier selection is enabled, start with the bundle product's selected variant or first available variant"
+    ]
+  },
+  {
+    date: "August 25, 2026",
+    tag: "Fixes",
+    title: "More reliable add-to-cart on bundle product pages",
+    summary:
+      "The updated Fixed Bundle with Infinite Variants template keeps bundle selections consistent when a product section contains more than one add-to-cart form.",
+    bullets: [
+      "Keep the selected bundle items in sync across all add-to-cart forms in the same product section",
+      "Pass the current bundle selection whichever of those forms the shopper uses"
+    ]
+  },
   {
     date: "August 20, 2026",
     tag: "Improvement",
